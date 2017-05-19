@@ -11,13 +11,9 @@ https://github.com/LtHummus/KTANELog/blob/master/ktaneparser/ktaneparser.py
      */
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-
         KtaneHandler khandler = new KtaneHandler();
-        khandler.go();
-
-        VolumeExample vex = new VolumeExample();
-
+        khandler.experiment = true;
+        khandler.go(2);
 
     }
 
