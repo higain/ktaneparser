@@ -1,10 +1,10 @@
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.Port;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousFileChannel;
+import java.nio.channels.CompletionHandler;
 import java.nio.file.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,13 +18,14 @@ import java.util.concurrent.*;
 public class KtaneHandler {
 
     private String analyticsFile = "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes/analytics/ktane.csv";
-    private String logFile = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/logs/ktane.log";
+    private String logFile = "logs/ktane.log";
     private String logDir = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/logs";
     private String ktaneExeLocation = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/ktane.exe";
 
     private Process runningGame;
     private boolean run;
     private int numberOfRounds = 0;
+    private int bufferOffset = 0;
     private Timestamp latestTs = new Timestamp(new Date().getTime());
 
     public KtaneHandler() {
@@ -42,12 +43,13 @@ public class KtaneHandler {
 
         while (run) {
             System.out.println("Check for game end!");
-            if (processFile(logFile)) {
+            if (processFile()) {
+            // if(false) {
                 System.out.println("Spiel zu ende");
                 run = false;
                 runningGame.destroy();
             }
-            schlafen(200);
+            schlafen(1000);
         }
     }
 
@@ -80,93 +82,65 @@ public class KtaneHandler {
     /**
      * Returns true, if
      *
-     * @param fileLoc
      * @return
      */
-    public boolean processFile(String fileLoc) {
+    public boolean processFile() {
 
-        // Watch-Service
-
-        System.out.println("Bis hier 1");
         try {
-            WatchService watchService = FileSystems.getDefault().newWatchService();
-            Path watchingPath = Paths.get(logDir);
-            watchingPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
 
-            WatchKey key = null;
+            /*File source = new File(logFile);
+            File dest = new File(logFile+"tmp");
             try {
-                System.out.println("Bis hier 2");
-                key = watchService.take();
-                for (WatchEvent<?> event : key.pollEvents()) {
-                    System.out.println("Bis hier 3");
-                    if (event.context().toString().equals(logDir)) {
-                        System.out.println("Bis hier 4");
-                        //Your file has changed, do something interesting with it.
+                Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
 
-                        try {
-                            System.out.println("Bis hier 5");
-                            List<String> tmp = new ArrayList<>();
-                            FileReader fr = new FileReader(fileLoc);
-                            BufferedReader br = new BufferedReader(fr);
-                            String ch;
+            List<String> tmp = new ArrayList<>();
+            FileReader fr = new FileReader(logFile);
+            BufferedReader br = new BufferedReader(fr);
+            String ch;
 
-                            while ((ch = br.readLine()) != null) {
-                                // Throw out non-info or non-debug (such as tables, html code, etc)
-                                if (ch.startsWith("DEBUG") || ch.startsWith("INFO")) {
-                                    ch = ch.replace("DEBUG ", "");
-                                    ch = ch.replace(" INFO ", "");
-                                    ch = ch.replaceFirst(",", ".");
-                                    tmp.add(ch);
-                                }
-                            }
-                            br.close();
-                            System.out.println("Checking " + tmp.size() + "Log entries");
-                            for (int i = tmp.size() - 1; i >= 0; i--) {
-                                // Prüfung durchführen, solange die Daten aktueller als die letze Prüfung sind
-                                // System.out.println("Gelesener TS: " + tmp.get(i).substring(0, 23));
-                                long duration = (3 * 60 * 60 * 1000);
-                                Timestamp ts = Timestamp.valueOf(tmp.get(i).substring(0, 23));
-                                ts.setTime(ts.getTime() + duration);
-                                // System.out.println("Vergleichender TS: " + ts);
-                                if (ts.before(latestTs)) {
-                                    System.out.println("Hier waren wir schon!");
-                                    latestTs = Timestamp.valueOf(tmp.get(tmp.size() - 1).substring(0, 23));
-                                    System.out.println("Neuer latest TS: " + latestTs);
-                                    tmp.clear();
-                                    break;
-                                } else {
-                                    // Wenn OnRoundEnd() in der Log-Datei steht wird true zurück gegeben, da Spiel vorbei
-                                    if (tmp.get(i).contains("OnRoundEnd()")) {
-                                        System.out.println("Runde zu Ende!");
-                                        tmp.clear();
-                                        return true;
-                                    }
-                                }
-                            }
-                        } catch (FileNotFoundException fnfe) {
-                            System.out.println("Dateipfad falsch!");
-                            return false;
-                        } catch (IOException ioe) {
-                            System.out.println("IO-Fehler!");
-                            return false;
-                        }
-                        return false;
+            while ((ch = br.readLine()) != null) {
+                // Throw out non-info or non-debug (such as tables, html code, etc)
+                if (ch.startsWith("DEBUG") || ch.startsWith("INFO")) {
+                    ch = ch.replace("DEBUG ", "");
+                    ch = ch.replace(" INFO ", "");
+                    ch = ch.replaceFirst(",", ".");
+                    tmp.add(ch);
+                }
+            }
+            br.close();
+            System.out.println("Checking " + tmp.size() + " Log entries");
+            for (int i = tmp.size() - 1; i >= 0; i--) {
+                // Prüfung durchführen, solange die Daten aktueller als die letze Prüfung sind
+                // System.out.println("Gelesener TS: " + tmp.get(i).substring(0, 23));
+                long duration = (3 * 60 * 60 * 1000);
+                Timestamp ts = Timestamp.valueOf(tmp.get(i).substring(0, 23));
+                ts.setTime(ts.getTime() + duration);
+                // System.out.println("Vergleichender TS: " + ts);
+                if (ts.before(latestTs)) {
+                    System.out.println("Hier waren wir schon!");
+                    latestTs = Timestamp.valueOf(tmp.get(tmp.size() - 1).substring(0, 23));
+                    System.out.println("Neuer latest TS: " + latestTs);
+                    tmp.clear();
+                    break;
+                } else {
+                    // Wenn OnRoundEnd() in der Log-Datei steht wird true zurück gegeben, da Spiel vorbei
+                    if (tmp.get(i).contains("OnRoundEnd()")) {
+                        System.out.println("Runde zu Ende!");
+                        tmp.clear();
+                        return true;
                     }
                 }
-            } catch (InterruptedException e) {
-                //Failed to watch for result file cahnges
-                //you might want to log this.
-                run = false;
-            } catch (ClosedWatchServiceException e1) {
-                run = false;
             }
-
-            boolean reset = key.reset();
-            if (!reset) {
-                run = false;
-            }
-        } catch (Exception e) {
-
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(logFile);
+            System.out.println("Dateipfad falsch!");
+            return false;
+        } catch (IOException ioe) {
+            System.out.println("IO-Fehler!");
+            return false;
         }
         return false;
     }
