@@ -19,6 +19,7 @@ public class KtaneHandler {
 
     private String analyticsFile = "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes/analytics/ktane.csv";
     private String logFile = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/logs/ktane.log";
+    private String logDir = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/logs";
     private String ktaneExeLocation = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/ktane.exe";
 
     private Process runningGame;
@@ -86,19 +87,24 @@ public class KtaneHandler {
 
         // Watch-Service
 
+        System.out.println("Bis hier 1");
         try {
             WatchService watchService = FileSystems.getDefault().newWatchService();
-            Path watchingPath = Paths.get(fileLoc);
+            Path watchingPath = Paths.get(logDir);
             watchingPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
 
             WatchKey key = null;
             try {
+                System.out.println("Bis hier 2");
                 key = watchService.take();
                 for (WatchEvent<?> event : key.pollEvents()) {
-                    if (event.context().toString().equals(fileLoc)) {
+                    System.out.println("Bis hier 3");
+                    if (event.context().toString().equals(logDir)) {
+                        System.out.println("Bis hier 4");
                         //Your file has changed, do something interesting with it.
 
                         try {
+                            System.out.println("Bis hier 5");
                             List<String> tmp = new ArrayList<>();
                             FileReader fr = new FileReader(fileLoc);
                             BufferedReader br = new BufferedReader(fr);

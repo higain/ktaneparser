@@ -4156,3 +4156,310 @@ DEBUG 2017-05-19 11:52:42,361 [PrefabOverride] Material override: InputBased: Tr
 DEBUG 2017-05-19 11:52:42,387 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/Materials/controls_poster_gaze"
  INFO 2017-05-19 11:52:42,402 [Assets.Scripts.Leaderboards.LeaderboardBulkSubmissionWorker] Submitting all unreported leaderboard scores.
  INFO 2017-05-19 11:52:42,405 [Assets.Scripts.Leaderboards.LeaderboardBulkSubmissionWorker] Finished submitting all unreported leaderboard scores.
+ INFO 2017-05-19 12:20:11,078 [Logging] Logging successfully configured from embedded logConfig asset.
+ INFO 2017-05-19 12:20:11,089 [Logging] Logging start.
+ INFO 2017-05-19 12:20:11,090 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:20:11,099 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:20:11,103 [Assets.Scripts.Settings.PlayerSettingsManager] PlayerSettings: InvertTiltControls: False, TouchpadInvert: False, RumbleEnabled: True, MusicVolume: 80, SFXVolume: 60, AntiAliasing: 4, VRModeRequested: True, SecondScreenMode: InteractiveManual, VSync: 1, AccessibilitySettings: Empty, Empty, Empty, DisabledControlTypes: None
+ INFO 2017-05-19 12:20:11,106 [Assets.Scripts.Settings.PlayerSettingsManager] Saving player settings.
+ INFO 2017-05-19 12:20:11,107 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to save "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:20:11,125 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully saved "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:20:11,128 [Assets.Scripts.Platform.PC.PCPlatformUtil] VRModeRequested: True
+ INFO 2017-05-19 12:20:11,129 [Assets.Scripts.Platform.PC.PCPlatformUtil] UnityEngine.VR.VRDevice.isPresent: False
+ INFO 2017-05-19 12:20:11,130 [Assets.Scripts.Platform.PC.PCPlatformUtil] No HMD detected. Falling back to non-VR mode.
+ INFO 2017-05-19 12:20:11,131 [Assets.Scripts.Platform.PC.PCPlatformUtil] Instantiating FixedCameraRig.
+DEBUG 2017-05-19 12:20:11,140 [KTInputManager] Requested setting control type to: Gaze
+DEBUG 2017-05-19 12:20:11,141 [KTInputManager] Control type not supported. Not changing control type.
+ INFO 2017-05-19 12:20:11,142 [KTInputManager] InControl Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)
+ INFO 2017-05-19 12:20:11,143 [KTInputManager] InControl Devices: 0
+ INFO 2017-05-19 12:20:11,144 [KTInputManager] Active device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:20:11,145 [KTInputManager] Active SecondScreen device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:20:11,152 [Logging] Logging successfully configured from external file.
+ WARN 2017-05-19 12:20:11,158 [Assets.Scripts.Services.Steam.ServicesSteam] STEAM HAS FAILED TO INITIALIZE. All steam features will be disabled for this game session. This likely means that the game was launched with Steam not running.
+DEBUG 2017-05-19 12:20:11,193 [SecondScreenInteractiveManual] Changing state from Loading to Loading
+ INFO 2017-05-19 12:20:11,196 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml"...
+ INFO 2017-05-19 12:20:11,199 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml".
+ INFO 2017-05-19 12:20:11,200 [Assets.Scripts.DemoManager] Demo settings: [Mode: Off], [DisableAlarmClockSound: False], [SkipVerificationFlow: False], [HideManualWebsiteReference: False], [ForgetLastGameSettings: False]
+ INFO 2017-05-19 12:20:11,202 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml"...
+ WARN 2017-05-19 12:20:11,204 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml": Could not find file "C:\Users\maxis\AppData\LocalLow\Steel Crate Games\Keep Talking and Nobody Explodes\tournamentSettings.xml".
+ INFO 2017-05-19 12:20:11,206 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from user path, looking for tournamentSettings.xml next to executable.
+ INFO 2017-05-19 12:20:11,207 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "tournamentSettings.xml"...
+ WARN 2017-05-19 12:20:11,208 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "tournamentSettings.xml": Could not find file "C:\Users\maxis\IdeaProjects\ParseKtaneStatus\tournamentSettings.xml".
+ INFO 2017-05-19 12:20:11,210 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from executable path. Creating default tournament settings.
+ INFO 2017-05-19 12:20:11,212 [Assets.Scripts.Tournaments.TournamentManager] Tournament settings: Name: Test Tournament
+Teams: 2
+Missions: firsttime,somethingoldsomethingnew,onestepup
+TieBreaker: firsttime
+Turn Order: Snake
+SeedStyle: GenerateSame 
+PacingEvents: ForceOneMinuteLeftOnly
+DEBUG 2017-05-19 12:20:11,235 [SecondScreenManager] VRMode=false, disabling.
+ INFO 2017-05-19 12:20:11,236 [SecondScreenManager] SecondScreen mode changed from Disabled to Disabled
+ INFO 2017-05-19 12:20:12,289 [LoadingManager] Loading: mainScene
+ INFO 2017-05-19 12:20:12,546 [LoadingManager] Finished loading: 0.25 sec(s)
+ INFO 2017-05-19 12:20:27,175 [Assets.Scripts.Progression.ProgressionManager] Loading progression data...
+ INFO 2017-05-19 12:20:27,177 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\progression.xml"...
+ INFO 2017-05-19 12:20:27,187 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\progression.xml".
+ INFO 2017-05-19 12:20:27,192 [Assets.Scripts.Progression.ProgressionManager] Progression summary:
+ INFO 2017-05-19 12:20:27,194 [Assets.Scripts.Progression.ProgressionManager] Last Unlocked Bomb Classification: 1
+ INFO 2017-05-19 12:20:27,196 [Assets.Scripts.Progression.ProgressionManager] MissionID: gameoverviewtutorial Beaten: True
+ INFO 2017-05-19 12:20:27,198 [Assets.Scripts.Progression.ProgressionManager] MissionID: controlstutorial Beaten: True
+ INFO 2017-05-19 12:20:27,199 [Assets.Scripts.Progression.ProgressionManager] MissionID: firsttime Beaten: True
+ INFO 2017-05-19 12:20:27,201 [Assets.Scripts.Progression.ProgressionManager] Disarmed component: Wires
+ INFO 2017-05-19 12:20:27,202 [Assets.Scripts.Progression.ProgressionManager] Disarmed component: Keypad
+ INFO 2017-05-19 12:20:27,203 [Assets.Scripts.Progression.ProgressionManager] Disarmed component: BigButton
+ INFO 2017-05-19 12:20:27,210 [Assets.Scripts.Missions.MissionManager] MissionManager initialized. 34 missions available.
+ INFO 2017-05-19 12:20:27,212 [Assets.Scripts.Records.RecordManager] Loading records from records.xml...
+ INFO 2017-05-19 12:20:27,213 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\records.xml"...
+ INFO 2017-05-19 12:20:27,218 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\records.xml".
+ INFO 2017-05-19 12:20:27,221 [Assets.Scripts.Records.RecordManager] Loading best time records from best_times.xml...
+ INFO 2017-05-19 12:20:27,222 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\best_times.xml"...
+ INFO 2017-05-19 12:20:27,228 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\best_times.xml".
+ INFO 2017-05-19 12:20:27,231 [Assets.Scripts.Records.RecordManager] 5 recent records found:
+ INFO 2017-05-19 12:20:27,233 [Assets.Scripts.Records.RecordManager] Record: 5 Mission: firsttime Result: ExplodedDueToStrikes Seed: 306704925 Modules: 3 Solved: 1 TimeElapsed: 12.17041  RealTimeElapsed: 18.52125 Strikes: 3
+ INFO 2017-05-19 12:20:27,234 [Assets.Scripts.Records.RecordManager] Record: 4 Mission: firsttime Result: ExplodedDueToStrikes Seed: 1274922090 Modules: 3 Solved: 0 TimeElapsed: 23.29239  RealTimeElapsed: 28.56035 Strikes: 3
+ INFO 2017-05-19 12:20:27,235 [Assets.Scripts.Records.RecordManager] Record: 3 Mission: firsttime Result: Defused Seed: 1628421471 Modules: 3 Solved: 3 TimeElapsed: 251.4682  RealTimeElapsed: 211.6927 Strikes: 1
+ INFO 2017-05-19 12:20:27,237 [Assets.Scripts.Records.RecordManager] Record: 2 Mission: firsttime Result: Defused Seed: 1491341989 Modules: 3 Solved: 3 TimeElapsed: 104.4699  RealTimeElapsed: 109.2822 Strikes: 1
+ INFO 2017-05-19 12:20:27,238 [Assets.Scripts.Records.RecordManager] Record: 1 Mission: firsttime Result: ExplodedDueToStrikes Seed: 1637287596 Modules: 3 Solved: 0 TimeElapsed: 23.71136  RealTimeElapsed: 29.56155 Strikes: 3
+ INFO 2017-05-19 12:20:27,239 [Assets.Scripts.Records.RecordManager] Recent Record Summary: Success: 2 ExplodeDueToStrikes: 3 ExplodeDueToTime: 0
+ INFO 2017-05-19 12:20:27,240 [Assets.Scripts.Records.RecordManager] 1 Best Time records found:
+ INFO 2017-05-19 12:20:27,242 [Assets.Scripts.Records.RecordManager] Record: 2 Mission: firsttime Result: Defused Seed: 1491341989 Modules: 3 Solved: 3 TimeElapsed: 104.4699  RealTimeElapsed: 109.2822 Strikes: 1
+ INFO 2017-05-19 12:20:27,243 [Assets.Scripts.Stats.StatsManager] Loading stats from stats.xml...
+ INFO 2017-05-19 12:20:27,244 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\stats.xml"...
+ INFO 2017-05-19 12:20:27,245 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\stats.xml".
+ INFO 2017-05-19 12:20:27,252 [Assets.Scripts.Stats.StatsManager] Recorded Stats:
+ INFO 2017-05-19 12:20:27,253 [Assets.Scripts.Stats.StatsManager] thebasicsprogress: IntValue: 0
+ INFO 2017-05-19 12:20:27,253 [Assets.Scripts.Stats.StatsManager] moduletypeprogress: IntValue: 3
+ INFO 2017-05-19 12:20:27,254 [Assets.Scripts.Stats.StatsManager] totalstrikes: IntValue: 61
+ INFO 2017-05-19 12:20:27,255 [Assets.Scripts.Stats.StatsManager] totalmodulesdisarmed: IntValue: 68
+ INFO 2017-05-19 12:20:27,255 [Assets.Scripts.Stats.StatsManager] totalbombsexploded: IntValue: 27
+ INFO 2017-05-19 12:20:27,256 [Assets.Scripts.Stats.StatsManager] totalbombsdefused: IntValue: 11
+ INFO 2017-05-19 12:20:27,256 [Assets.Scripts.Stats.StatsManager] moderateprogress: IntValue: 0
+ INFO 2017-05-19 12:20:27,257 [Assets.Scripts.Stats.StatsManager] needyprogress: IntValue: 0
+ INFO 2017-05-19 12:20:27,258 [Assets.Scripts.Stats.StatsManager] challengingprogress: IntValue: 0
+ INFO 2017-05-19 12:20:27,258 [Assets.Scripts.Stats.StatsManager] extremeprogress: IntValue: 0
+ INFO 2017-05-19 12:20:27,259 [Assets.Scripts.Stats.StatsManager] exoticprogress: IntValue: 0
+ INFO 2017-05-19 12:20:27,260 [Assets.Scripts.Stats.StatsManager] Recorded Achievements:
+ INFO 2017-05-19 12:20:27,260 [Assets.Scripts.Stats.StatsManager] firstbomb: unlocked at 05/15/2017 14:22:41
+ INFO 2017-05-19 12:20:27,262 [SceneManager] Creating game states...
+DEBUG 2017-05-19 12:20:27,356 [MissionTableOfContentsPageManager] Showing ToC 0 page 0.
+DEBUG 2017-05-19 12:20:27,445 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/"
+DEBUG 2017-05-19 12:20:27,448 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/"
+DEBUG 2017-05-19 12:20:27,467 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/Materials/controls_poster_gaze"
+ INFO 2017-05-19 12:20:27,488 [Assets.Scripts.Leaderboards.LeaderboardBulkSubmissionWorker] Submitting all unreported leaderboard scores.
+ INFO 2017-05-19 12:20:27,490 [Assets.Scripts.Leaderboards.LeaderboardBulkSubmissionWorker] Finished submitting all unreported leaderboard scores.
+ INFO 2017-05-19 12:21:30,883 [Logging] Logging successfully configured from embedded logConfig asset.
+ INFO 2017-05-19 12:21:30,894 [Logging] Logging start.
+ INFO 2017-05-19 12:21:30,896 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:21:30,905 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:21:30,908 [Assets.Scripts.Settings.PlayerSettingsManager] PlayerSettings: InvertTiltControls: False, TouchpadInvert: False, RumbleEnabled: True, MusicVolume: 80, SFXVolume: 60, AntiAliasing: 4, VRModeRequested: True, SecondScreenMode: InteractiveManual, VSync: 1, AccessibilitySettings: Empty, Empty, Empty, DisabledControlTypes: None
+ INFO 2017-05-19 12:21:30,914 [Assets.Scripts.Settings.PlayerSettingsManager] Saving player settings.
+ INFO 2017-05-19 12:21:30,915 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to save "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:21:31,259 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully saved "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:21:31,312 [Assets.Scripts.Platform.PC.PCPlatformUtil] VRModeRequested: True
+ INFO 2017-05-19 12:21:31,332 [Assets.Scripts.Platform.PC.PCPlatformUtil] UnityEngine.VR.VRDevice.isPresent: False
+ INFO 2017-05-19 12:21:31,345 [Assets.Scripts.Platform.PC.PCPlatformUtil] No HMD detected. Falling back to non-VR mode.
+ INFO 2017-05-19 12:21:31,346 [Assets.Scripts.Platform.PC.PCPlatformUtil] Instantiating FixedCameraRig.
+DEBUG 2017-05-19 12:21:31,473 [KTInputManager] Requested setting control type to: Gaze
+DEBUG 2017-05-19 12:21:31,494 [KTInputManager] Control type not supported. Not changing control type.
+ INFO 2017-05-19 12:21:31,536 [KTInputManager] InControl Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)
+ INFO 2017-05-19 12:21:31,547 [KTInputManager] InControl Devices: 0
+ INFO 2017-05-19 12:21:31,578 [KTInputManager] Active device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:21:31,588 [KTInputManager] Active SecondScreen device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:21:31,768 [Logging] Logging successfully configured from external file.
+ WARN 2017-05-19 12:21:31,898 [Assets.Scripts.Services.Steam.ServicesSteam] STEAM HAS FAILED TO INITIALIZE. All steam features will be disabled for this game session. This likely means that the game was launched with Steam not running.
+DEBUG 2017-05-19 12:21:31,962 [SecondScreenInteractiveManual] Changing state from Loading to Loading
+ INFO 2017-05-19 12:21:31,966 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml"...
+ INFO 2017-05-19 12:21:31,969 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml".
+ INFO 2017-05-19 12:21:31,971 [Assets.Scripts.DemoManager] Demo settings: [Mode: Off], [DisableAlarmClockSound: False], [SkipVerificationFlow: False], [HideManualWebsiteReference: False], [ForgetLastGameSettings: False]
+ INFO 2017-05-19 12:21:31,973 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml"...
+ WARN 2017-05-19 12:21:31,975 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml": Could not find file "C:\Users\maxis\AppData\LocalLow\Steel Crate Games\Keep Talking and Nobody Explodes\tournamentSettings.xml".
+ INFO 2017-05-19 12:21:31,978 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from user path, looking for tournamentSettings.xml next to executable.
+ INFO 2017-05-19 12:21:31,979 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "tournamentSettings.xml"...
+ WARN 2017-05-19 12:21:31,980 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "tournamentSettings.xml": Could not find file "C:\Users\maxis\IdeaProjects\ParseKtaneStatus\tournamentSettings.xml".
+ INFO 2017-05-19 12:21:31,982 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from executable path. Creating default tournament settings.
+ INFO 2017-05-19 12:21:31,985 [Assets.Scripts.Tournaments.TournamentManager] Tournament settings: Name: Test Tournament
+Teams: 2
+Missions: firsttime,somethingoldsomethingnew,onestepup
+TieBreaker: firsttime
+Turn Order: Snake
+SeedStyle: GenerateSame 
+PacingEvents: ForceOneMinuteLeftOnly
+DEBUG 2017-05-19 12:21:32,009 [SecondScreenManager] VRMode=false, disabling.
+ INFO 2017-05-19 12:21:32,009 [SecondScreenManager] SecondScreen mode changed from Disabled to Disabled
+ INFO 2017-05-19 12:21:33,063 [LoadingManager] Loading: mainScene
+ INFO 2017-05-19 12:21:33,247 [LoadingManager] Finished loading: 0.18 sec(s)
+ INFO 2017-05-19 12:21:58,375 [Logging] Logging successfully configured from embedded logConfig asset.
+ INFO 2017-05-19 12:21:58,387 [Logging] Logging start.
+ INFO 2017-05-19 12:21:58,388 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:21:58,396 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:21:58,399 [Assets.Scripts.Settings.PlayerSettingsManager] PlayerSettings: InvertTiltControls: False, TouchpadInvert: False, RumbleEnabled: True, MusicVolume: 80, SFXVolume: 60, AntiAliasing: 4, VRModeRequested: True, SecondScreenMode: InteractiveManual, VSync: 1, AccessibilitySettings: Empty, Empty, Empty, DisabledControlTypes: None
+ INFO 2017-05-19 12:21:58,403 [Assets.Scripts.Settings.PlayerSettingsManager] Saving player settings.
+ INFO 2017-05-19 12:21:58,404 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to save "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:21:58,423 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully saved "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:21:58,426 [Assets.Scripts.Platform.PC.PCPlatformUtil] VRModeRequested: True
+ INFO 2017-05-19 12:21:58,427 [Assets.Scripts.Platform.PC.PCPlatformUtil] UnityEngine.VR.VRDevice.isPresent: False
+ INFO 2017-05-19 12:21:58,428 [Assets.Scripts.Platform.PC.PCPlatformUtil] No HMD detected. Falling back to non-VR mode.
+ INFO 2017-05-19 12:21:58,428 [Assets.Scripts.Platform.PC.PCPlatformUtil] Instantiating FixedCameraRig.
+DEBUG 2017-05-19 12:21:58,438 [KTInputManager] Requested setting control type to: Gaze
+DEBUG 2017-05-19 12:21:58,438 [KTInputManager] Control type not supported. Not changing control type.
+ INFO 2017-05-19 12:21:58,439 [KTInputManager] InControl Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)
+ INFO 2017-05-19 12:21:58,440 [KTInputManager] InControl Devices: 0
+ INFO 2017-05-19 12:21:58,444 [KTInputManager] Active device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:21:58,444 [KTInputManager] Active SecondScreen device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:21:58,451 [Logging] Logging successfully configured from external file.
+ WARN 2017-05-19 12:21:58,457 [Assets.Scripts.Services.Steam.ServicesSteam] STEAM HAS FAILED TO INITIALIZE. All steam features will be disabled for this game session. This likely means that the game was launched with Steam not running.
+DEBUG 2017-05-19 12:21:58,493 [SecondScreenInteractiveManual] Changing state from Loading to Loading
+ INFO 2017-05-19 12:21:58,495 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml"...
+ INFO 2017-05-19 12:21:58,497 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml".
+ INFO 2017-05-19 12:21:58,499 [Assets.Scripts.DemoManager] Demo settings: [Mode: Off], [DisableAlarmClockSound: False], [SkipVerificationFlow: False], [HideManualWebsiteReference: False], [ForgetLastGameSettings: False]
+ INFO 2017-05-19 12:21:58,500 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml"...
+ WARN 2017-05-19 12:21:58,502 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml": Could not find file "C:\Users\maxis\AppData\LocalLow\Steel Crate Games\Keep Talking and Nobody Explodes\tournamentSettings.xml".
+ INFO 2017-05-19 12:21:58,504 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from user path, looking for tournamentSettings.xml next to executable.
+ INFO 2017-05-19 12:21:58,505 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "tournamentSettings.xml"...
+ WARN 2017-05-19 12:21:58,506 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "tournamentSettings.xml": Could not find file "C:\Users\maxis\IdeaProjects\ParseKtaneStatus\tournamentSettings.xml".
+ INFO 2017-05-19 12:21:58,507 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from executable path. Creating default tournament settings.
+ INFO 2017-05-19 12:21:58,509 [Assets.Scripts.Tournaments.TournamentManager] Tournament settings: Name: Test Tournament
+Teams: 2
+Missions: firsttime,somethingoldsomethingnew,onestepup
+TieBreaker: firsttime
+Turn Order: Snake
+SeedStyle: GenerateSame 
+PacingEvents: ForceOneMinuteLeftOnly
+DEBUG 2017-05-19 12:21:58,530 [SecondScreenManager] VRMode=false, disabling.
+ INFO 2017-05-19 12:21:58,531 [SecondScreenManager] SecondScreen mode changed from Disabled to Disabled
+ INFO 2017-05-19 12:21:59,620 [LoadingManager] Loading: mainScene
+ INFO 2017-05-19 12:21:59,838 [LoadingManager] Finished loading: 0.21 sec(s)
+ INFO 2017-05-19 12:23:57,187 [Logging] Logging successfully configured from embedded logConfig asset.
+ INFO 2017-05-19 12:23:57,198 [Logging] Logging start.
+ INFO 2017-05-19 12:23:57,199 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:23:57,208 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:23:57,211 [Assets.Scripts.Settings.PlayerSettingsManager] PlayerSettings: InvertTiltControls: False, TouchpadInvert: False, RumbleEnabled: True, MusicVolume: 80, SFXVolume: 60, AntiAliasing: 4, VRModeRequested: True, SecondScreenMode: InteractiveManual, VSync: 1, AccessibilitySettings: Empty, Empty, Empty, DisabledControlTypes: None
+ INFO 2017-05-19 12:23:57,215 [Assets.Scripts.Settings.PlayerSettingsManager] Saving player settings.
+ INFO 2017-05-19 12:23:57,216 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to save "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:23:57,371 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully saved "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:23:57,416 [Assets.Scripts.Platform.PC.PCPlatformUtil] VRModeRequested: True
+ INFO 2017-05-19 12:23:57,426 [Assets.Scripts.Platform.PC.PCPlatformUtil] UnityEngine.VR.VRDevice.isPresent: False
+ INFO 2017-05-19 12:23:57,436 [Assets.Scripts.Platform.PC.PCPlatformUtil] No HMD detected. Falling back to non-VR mode.
+ INFO 2017-05-19 12:23:57,446 [Assets.Scripts.Platform.PC.PCPlatformUtil] Instantiating FixedCameraRig.
+DEBUG 2017-05-19 12:23:57,613 [KTInputManager] Requested setting control type to: Gaze
+DEBUG 2017-05-19 12:23:57,624 [KTInputManager] Control type not supported. Not changing control type.
+ INFO 2017-05-19 12:23:57,644 [KTInputManager] InControl Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)
+ INFO 2017-05-19 12:23:57,654 [KTInputManager] InControl Devices: 0
+ INFO 2017-05-19 12:23:57,675 [KTInputManager] Active device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:23:57,685 [KTInputManager] Active SecondScreen device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:23:57,838 [Logging] Logging successfully configured from external file.
+ WARN 2017-05-19 12:23:57,934 [Assets.Scripts.Services.Steam.ServicesSteam] STEAM HAS FAILED TO INITIALIZE. All steam features will be disabled for this game session. This likely means that the game was launched with Steam not running.
+DEBUG 2017-05-19 12:23:58,256 [SecondScreenInteractiveManual] Changing state from Loading to Loading
+ INFO 2017-05-19 12:23:58,261 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml"...
+ INFO 2017-05-19 12:23:58,264 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml".
+ INFO 2017-05-19 12:23:58,265 [Assets.Scripts.DemoManager] Demo settings: [Mode: Off], [DisableAlarmClockSound: False], [SkipVerificationFlow: False], [HideManualWebsiteReference: False], [ForgetLastGameSettings: False]
+ INFO 2017-05-19 12:23:58,267 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml"...
+ WARN 2017-05-19 12:23:58,269 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml": Could not find file "C:\Users\maxis\AppData\LocalLow\Steel Crate Games\Keep Talking and Nobody Explodes\tournamentSettings.xml".
+ INFO 2017-05-19 12:23:58,272 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from user path, looking for tournamentSettings.xml next to executable.
+ INFO 2017-05-19 12:23:58,273 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "tournamentSettings.xml"...
+ WARN 2017-05-19 12:23:58,274 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "tournamentSettings.xml": Could not find file "C:\Users\maxis\IdeaProjects\ParseKtaneStatus\tournamentSettings.xml".
+ INFO 2017-05-19 12:23:58,276 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from executable path. Creating default tournament settings.
+ INFO 2017-05-19 12:23:58,278 [Assets.Scripts.Tournaments.TournamentManager] Tournament settings: Name: Test Tournament
+Teams: 2
+Missions: firsttime,somethingoldsomethingnew,onestepup
+TieBreaker: firsttime
+Turn Order: Snake
+SeedStyle: GenerateSame 
+PacingEvents: ForceOneMinuteLeftOnly
+DEBUG 2017-05-19 12:23:58,302 [SecondScreenManager] VRMode=false, disabling.
+ INFO 2017-05-19 12:23:58,303 [SecondScreenManager] SecondScreen mode changed from Disabled to Disabled
+ INFO 2017-05-19 12:23:59,379 [LoadingManager] Loading: mainScene
+ INFO 2017-05-19 12:23:59,635 [LoadingManager] Finished loading: 0.25 sec(s)
+ INFO 2017-05-19 12:24:39,222 [Logging] Logging successfully configured from embedded logConfig asset.
+ INFO 2017-05-19 12:24:39,234 [Logging] Logging start.
+ INFO 2017-05-19 12:24:39,235 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:24:39,243 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:24:39,246 [Assets.Scripts.Settings.PlayerSettingsManager] PlayerSettings: InvertTiltControls: False, TouchpadInvert: False, RumbleEnabled: True, MusicVolume: 80, SFXVolume: 60, AntiAliasing: 4, VRModeRequested: True, SecondScreenMode: InteractiveManual, VSync: 1, AccessibilitySettings: Empty, Empty, Empty, DisabledControlTypes: None
+ INFO 2017-05-19 12:24:39,249 [Assets.Scripts.Settings.PlayerSettingsManager] Saving player settings.
+ INFO 2017-05-19 12:24:39,250 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to save "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml"...
+ INFO 2017-05-19 12:24:39,268 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully saved "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\playerSettings.xml".
+DEBUG 2017-05-19 12:24:39,272 [Assets.Scripts.Platform.PC.PCPlatformUtil] VRModeRequested: True
+ INFO 2017-05-19 12:24:39,272 [Assets.Scripts.Platform.PC.PCPlatformUtil] UnityEngine.VR.VRDevice.isPresent: False
+ INFO 2017-05-19 12:24:39,273 [Assets.Scripts.Platform.PC.PCPlatformUtil] No HMD detected. Falling back to non-VR mode.
+ INFO 2017-05-19 12:24:39,274 [Assets.Scripts.Platform.PC.PCPlatformUtil] Instantiating FixedCameraRig.
+DEBUG 2017-05-19 12:24:39,281 [KTInputManager] Requested setting control type to: Gaze
+DEBUG 2017-05-19 12:24:39,282 [KTInputManager] Control type not supported. Not changing control type.
+ INFO 2017-05-19 12:24:39,283 [KTInputManager] InControl Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)
+ INFO 2017-05-19 12:24:39,284 [KTInputManager] InControl Devices: 0
+ INFO 2017-05-19 12:24:39,285 [KTInputManager] Active device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:24:39,286 [KTInputManager] Active SecondScreen device: None () [Supported] [Platform: WINDOWS 10 HOME 32BIT ASPIRE VN7-592G (ACER)]
+ INFO 2017-05-19 12:24:39,292 [Logging] Logging successfully configured from external file.
+ WARN 2017-05-19 12:24:39,298 [Assets.Scripts.Services.Steam.ServicesSteam] STEAM HAS FAILED TO INITIALIZE. All steam features will be disabled for this game session. This likely means that the game was launched with Steam not running.
+DEBUG 2017-05-19 12:24:39,333 [SecondScreenInteractiveManual] Changing state from Loading to Loading
+ INFO 2017-05-19 12:24:39,335 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml"...
+ INFO 2017-05-19 12:24:39,337 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\demoSettings.xml".
+ INFO 2017-05-19 12:24:39,339 [Assets.Scripts.DemoManager] Demo settings: [Mode: Off], [DisableAlarmClockSound: False], [SkipVerificationFlow: False], [HideManualWebsiteReference: False], [ForgetLastGameSettings: False]
+ INFO 2017-05-19 12:24:39,340 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml"...
+ WARN 2017-05-19 12:24:39,342 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\tournamentSettings.xml": Could not find file "C:\Users\maxis\AppData\LocalLow\Steel Crate Games\Keep Talking and Nobody Explodes\tournamentSettings.xml".
+ INFO 2017-05-19 12:24:39,344 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from user path, looking for tournamentSettings.xml next to executable.
+ INFO 2017-05-19 12:24:39,345 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "tournamentSettings.xml"...
+ WARN 2017-05-19 12:24:39,346 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Failed to load "tournamentSettings.xml": Could not find file "C:\Users\maxis\IdeaProjects\ParseKtaneStatus\tournamentSettings.xml".
+ INFO 2017-05-19 12:24:39,347 [Assets.Scripts.Tournaments.TournamentManager] Failed to load tournament settings from executable path. Creating default tournament settings.
+ INFO 2017-05-19 12:24:39,349 [Assets.Scripts.Tournaments.TournamentManager] Tournament settings: Name: Test Tournament
+Teams: 2
+Missions: firsttime,somethingoldsomethingnew,onestepup
+TieBreaker: firsttime
+Turn Order: Snake
+SeedStyle: GenerateSame 
+PacingEvents: ForceOneMinuteLeftOnly
+DEBUG 2017-05-19 12:24:39,370 [SecondScreenManager] VRMode=false, disabling.
+ INFO 2017-05-19 12:24:39,371 [SecondScreenManager] SecondScreen mode changed from Disabled to Disabled
+ INFO 2017-05-19 12:24:40,450 [LoadingManager] Loading: mainScene
+ INFO 2017-05-19 12:24:40,667 [LoadingManager] Finished loading: 0.21 sec(s)
+ INFO 2017-05-19 12:25:17,943 [Assets.Scripts.Progression.ProgressionManager] Loading progression data...
+ INFO 2017-05-19 12:25:17,945 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\progression.xml"...
+ INFO 2017-05-19 12:25:17,957 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\progression.xml".
+ INFO 2017-05-19 12:25:17,963 [Assets.Scripts.Progression.ProgressionManager] Progression summary:
+ INFO 2017-05-19 12:25:17,965 [Assets.Scripts.Progression.ProgressionManager] Last Unlocked Bomb Classification: 1
+ INFO 2017-05-19 12:25:17,969 [Assets.Scripts.Progression.ProgressionManager] MissionID: gameoverviewtutorial Beaten: True
+ INFO 2017-05-19 12:25:17,972 [Assets.Scripts.Progression.ProgressionManager] MissionID: controlstutorial Beaten: True
+ INFO 2017-05-19 12:25:17,975 [Assets.Scripts.Progression.ProgressionManager] MissionID: firsttime Beaten: True
+ INFO 2017-05-19 12:25:17,978 [Assets.Scripts.Progression.ProgressionManager] Disarmed component: Wires
+ INFO 2017-05-19 12:25:17,981 [Assets.Scripts.Progression.ProgressionManager] Disarmed component: Keypad
+ INFO 2017-05-19 12:25:17,984 [Assets.Scripts.Progression.ProgressionManager] Disarmed component: BigButton
+ INFO 2017-05-19 12:25:17,997 [Assets.Scripts.Missions.MissionManager] MissionManager initialized. 34 missions available.
+ INFO 2017-05-19 12:25:17,999 [Assets.Scripts.Records.RecordManager] Loading records from records.xml...
+ INFO 2017-05-19 12:25:18,001 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\records.xml"...
+ INFO 2017-05-19 12:25:18,009 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\records.xml".
+ INFO 2017-05-19 12:25:18,013 [Assets.Scripts.Records.RecordManager] Loading best time records from best_times.xml...
+ INFO 2017-05-19 12:25:18,016 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\best_times.xml"...
+ INFO 2017-05-19 12:25:18,028 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\best_times.xml".
+ INFO 2017-05-19 12:25:18,036 [Assets.Scripts.Records.RecordManager] 5 recent records found:
+ INFO 2017-05-19 12:25:18,042 [Assets.Scripts.Records.RecordManager] Record: 5 Mission: firsttime Result: ExplodedDueToStrikes Seed: 306704925 Modules: 3 Solved: 1 TimeElapsed: 12.17041  RealTimeElapsed: 18.52125 Strikes: 3
+ INFO 2017-05-19 12:25:18,048 [Assets.Scripts.Records.RecordManager] Record: 4 Mission: firsttime Result: ExplodedDueToStrikes Seed: 1274922090 Modules: 3 Solved: 0 TimeElapsed: 23.29239  RealTimeElapsed: 28.56035 Strikes: 3
+ INFO 2017-05-19 12:25:18,052 [Assets.Scripts.Records.RecordManager] Record: 3 Mission: firsttime Result: Defused Seed: 1628421471 Modules: 3 Solved: 3 TimeElapsed: 251.4682  RealTimeElapsed: 211.6927 Strikes: 1
+ INFO 2017-05-19 12:25:18,055 [Assets.Scripts.Records.RecordManager] Record: 2 Mission: firsttime Result: Defused Seed: 1491341989 Modules: 3 Solved: 3 TimeElapsed: 104.4699  RealTimeElapsed: 109.2822 Strikes: 1
+ INFO 2017-05-19 12:25:18,057 [Assets.Scripts.Records.RecordManager] Record: 1 Mission: firsttime Result: ExplodedDueToStrikes Seed: 1637287596 Modules: 3 Solved: 0 TimeElapsed: 23.71136  RealTimeElapsed: 29.56155 Strikes: 3
+ INFO 2017-05-19 12:25:18,060 [Assets.Scripts.Records.RecordManager] Recent Record Summary: Success: 2 ExplodeDueToStrikes: 3 ExplodeDueToTime: 0
+ INFO 2017-05-19 12:25:18,062 [Assets.Scripts.Records.RecordManager] 1 Best Time records found:
+ INFO 2017-05-19 12:25:18,065 [Assets.Scripts.Records.RecordManager] Record: 2 Mission: firsttime Result: Defused Seed: 1491341989 Modules: 3 Solved: 3 TimeElapsed: 104.4699  RealTimeElapsed: 109.2822 Strikes: 1
+ INFO 2017-05-19 12:25:18,068 [Assets.Scripts.Stats.StatsManager] Loading stats from stats.xml...
+ INFO 2017-05-19 12:25:18,070 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Attempting to load "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\stats.xml"...
+ INFO 2017-05-19 12:25:18,073 [Assets.Scripts.Platform.Common.IO.FileUtilityHelper] Successfully loaded "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes\stats.xml".
+ INFO 2017-05-19 12:25:18,086 [Assets.Scripts.Stats.StatsManager] Recorded Stats:
+ INFO 2017-05-19 12:25:18,087 [Assets.Scripts.Stats.StatsManager] thebasicsprogress: IntValue: 0
+ INFO 2017-05-19 12:25:18,089 [Assets.Scripts.Stats.StatsManager] moduletypeprogress: IntValue: 3
+ INFO 2017-05-19 12:25:18,090 [Assets.Scripts.Stats.StatsManager] totalstrikes: IntValue: 61
+ INFO 2017-05-19 12:25:18,091 [Assets.Scripts.Stats.StatsManager] totalmodulesdisarmed: IntValue: 68
+ INFO 2017-05-19 12:25:18,092 [Assets.Scripts.Stats.StatsManager] totalbombsexploded: IntValue: 27
+ INFO 2017-05-19 12:25:18,093 [Assets.Scripts.Stats.StatsManager] totalbombsdefused: IntValue: 11
+ INFO 2017-05-19 12:25:18,094 [Assets.Scripts.Stats.StatsManager] moderateprogress: IntValue: 0
+ INFO 2017-05-19 12:25:18,095 [Assets.Scripts.Stats.StatsManager] needyprogress: IntValue: 0
+ INFO 2017-05-19 12:25:18,096 [Assets.Scripts.Stats.StatsManager] challengingprogress: IntValue: 0
+ INFO 2017-05-19 12:25:18,097 [Assets.Scripts.Stats.StatsManager] extremeprogress: IntValue: 0
+ INFO 2017-05-19 12:25:18,099 [Assets.Scripts.Stats.StatsManager] exoticprogress: IntValue: 0
+ INFO 2017-05-19 12:25:18,100 [Assets.Scripts.Stats.StatsManager] Recorded Achievements:
+ INFO 2017-05-19 12:25:18,101 [Assets.Scripts.Stats.StatsManager] firstbomb: unlocked at 05/15/2017 14:22:41
+ INFO 2017-05-19 12:25:18,104 [SceneManager] Creating game states...
+DEBUG 2017-05-19 12:25:18,247 [MissionTableOfContentsPageManager] Showing ToC 0 page 0.
+DEBUG 2017-05-19 12:25:18,350 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/"
+DEBUG 2017-05-19 12:25:18,352 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/"
+DEBUG 2017-05-19 12:25:18,367 [PrefabOverride] Material override: InputBased: True, CurrentControlType: Gaze, Path: "PC/Materials/controls_poster_gaze"
+ INFO 2017-05-19 12:25:18,389 [Assets.Scripts.Leaderboards.LeaderboardBulkSubmissionWorker] Submitting all unreported leaderboard scores.
+ INFO 2017-05-19 12:25:18,391 [Assets.Scripts.Leaderboards.LeaderboardBulkSubmissionWorker] Finished submitting all unreported leaderboard scores.
