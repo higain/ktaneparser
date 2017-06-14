@@ -42,6 +42,8 @@ public class KtaneHandler {
     private String timeLeft, bombState;
     private long strikes;
 
+    private WindowHandler windowHandler;
+
 
     KtaneJsonHandler ktjshandler;
 
@@ -82,7 +84,7 @@ public class KtaneHandler {
             System.out.println("Shutting down game");
             schlafen(7000);
             strikes = 0;
-            timeLeft = bombState = runningGame = solvableModules =  modules =  solvedModules = null;
+            timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
         }
         System.out.println("Experiment zu ende!");
     }
@@ -140,6 +142,7 @@ public class KtaneHandler {
         try {
             // Runtime.getRuntime().exec(ktaneLocation);
             Process ktaneProcess = new ProcessBuilder(ktaneLocation).start();
+
             System.out.println("Process started");
             boolean started = false;
             String pid = "";
@@ -167,6 +170,8 @@ public class KtaneHandler {
                                 pid = regline.get(1);
                             }
                             started = true;
+                            windowHandler = new WindowHandler();
+                            windowHandler.resizeWindow();
                             break;
                         }
                     }
@@ -177,7 +182,7 @@ public class KtaneHandler {
             }
 
             return pid;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             schlafen(200);
             startGame(ktaneLocation);
@@ -192,8 +197,6 @@ public class KtaneHandler {
 
 
     /**
-     * Returns true, if
-     *
      * @return
      */
     public boolean processFile() {
