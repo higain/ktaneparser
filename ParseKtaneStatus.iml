@@ -7,17 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library>
-        <CLASSES />
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/commons-codec-1.9.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/jna-4.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -26,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/commons-logging-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/jna-platform-4.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -35,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/fluent-hc-4.5.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/json-simple-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -44,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/httpclient-4.5.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/commons-logging-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -53,7 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/httpclient-cache-4.5.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/httpcore-4.4.6.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -62,7 +55,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/httpclient-win-4.5.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/httpclient-4.5.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -71,7 +64,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/httpcore-4.4.6.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/fluent-hc-4.5.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -80,7 +73,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/httpmime-4.5.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/httpmime-4.5.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -89,7 +82,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/jna-4.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/httpclient-win-4.5.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -98,7 +91,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/lib/jna-platform-4.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/httpclient-cache-4.5.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -107,25 +100,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/workspace/IISM/ApacheHttpLib/json-simple-1.1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://D:/workspace/IISM/JavaLibs/jna-4.4.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://D:/workspace/IISM/JavaLibs/jna-platform-4.4.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/ApacheHttpLib/commons-codec-1.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
