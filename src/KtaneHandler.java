@@ -50,42 +50,48 @@ public class KtaneHandler {
     public KtaneHandler() {
     }
 
-    public void go(int numberOfGames) {
+    public void goStandalone(int numberOfGames) {
+        while (numberOfGames > numberOfRounds) {
+            System.out.println("Start game Nr. " + numberOfRounds + " of " + numberOfGames);
+            go(numberOfRounds);
+            numberOfRounds++;
+        }
+
+        System.out.println("Experiment zu ende!");
+    }
+
+    public void go(int gameId) {
         System.out.println("Aktuellster TS: " + latestTs);
 
-        while (numberOfGames > numberOfRounds) {
-            initialize();
-            System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
-            runningGame = startGame(ktaneFromSteam);
-            schlafen(15000);
-            while (!startMission(numberOfRounds)) {
-                schlafen(200);
-                System.out.println("Konnte mission nicht starten.");
-            }
-            // startMission(numberOfRounds);
-            schlafen(5000);
-            numberOfRounds++;
-            System.out.println("Start game Nr. " + numberOfRounds + " of " + numberOfGames);
-            // used for log file parsing latestTs = new Timestamp(new Date().getTime());
-            while (bombState == null) {
-                parseJson(ktjshandler.fetchBombInfos());
-                schlafen(200);
-                System.out.println("Mission noch nicht fertig geladen.");
-            }
-            while (!(bombState.equals("Exploded"))) {
-                parseJson(ktjshandler.fetchBombInfos());
-                schlafen(500);
-            }
-            System.out.println("Spiel zu ende");
-            bombState = null;
-            System.out.println("Waiting for Process: " + runningGame);
-            schlafen(3000);
-            stopGame(runningGame);
-            System.out.println("Shutting down game");
-            schlafen(7000);
-            strikes = 0;
-            timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
+        initialize();
+        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
+        runningGame = startGame(ktaneFromSteam);
+        schlafen(15000);
+        while (!startMission(gameId)) {
+            schlafen(200);
+            System.out.println("Konnte mission nicht starten.");
         }
+        // startMission(numberOfRounds);
+        schlafen(5000);
+        // used for log file parsing latestTs = new Timestamp(new Date().getTime());
+        while (bombState == null) {
+            parseJson(ktjshandler.fetchBombInfos());
+            schlafen(200);
+            System.out.println("Mission noch nicht fertig geladen.");
+        }
+        while (!(bombState.equals("Exploded"))) {
+            parseJson(ktjshandler.fetchBombInfos());
+            schlafen(500);
+        }
+        System.out.println("Spiel zu ende");
+        bombState = null;
+        System.out.println("Waiting for Process: " + runningGame);
+        schlafen(3000);
+        stopGame(runningGame);
+        System.out.println("Shutting down game");
+        schlafen(7000);
+        strikes = 0;
+        timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
         System.out.println("Experiment zu ende!");
     }
 
