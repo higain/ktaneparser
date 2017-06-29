@@ -1,3 +1,8 @@
+package edu.kit.ktane;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -5,16 +10,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-
-import java.util.concurrent.ThreadLocalRandom;
-
 /**
  * Created by maxis on 17.05.2017.
  * TODO: Fenster auf eine Seite verschieben, damit Biofeedback angezeigt wird
  */
 public class KtaneHandler {
+
+//    /**
+//     * Logger
+//     */
+//    final Logger logger = Logger.getLogger(getClass().getName());
 
     // brauch ich nicht private String analyticsFile = "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes/analytics/ktane.csv";
     private String logFile = "logs/ktane.log";
@@ -48,6 +53,31 @@ public class KtaneHandler {
     KtaneJsonHandler ktjshandler;
 
     public KtaneHandler() {
+//        if (OS == null) {
+//            OS = System.getProperty("os.name");
+//        }
+//
+//        if (OS.startsWith("Windows")) {
+//            logFile = "logs/ktane.log";                                             // New version with steam
+//            ktaneFromSteam = new String[]{"C:/Program Files (x86)/Steam/Steam.exe", "-applaunch", "341800"};
+////            ktaneExeLocation = "C:/Users/exp/Desktop/ktane/ktane.exe";
+////                    System.getProperty("user.dir") +
+////                            "/Exp_Implementation/src/edu/kit/exp/impl/groupmeter/server/res/game/ktaneWin/ktane.exe";
+////            logFile = "C:/Users/exp/Desktop/ktane/logs/ktane.log";
+//
+//        } else if (OS.startsWith("Mac")) {
+////            logFile = "/Users/michaelknierim/Desktop/game/logs/ktane.log";        // Old version without steam
+//            logFile = "logs/ktane.log";                                             // New version with steam
+//            ktaneFromSteam = new String[]{"/Applications/Steam.app/Contents/MacOS/steam_osx", "-applaunch", "341800"};
+////            ktaneExeLocation =
+////                    "/Users/michaelknierim/Desktop/game/ktaneMac.app/Contents/MacOS/Keep Talking and Nobody Explodes";
+////                    System.getProperty("user.dir") +
+////                            "/Exp_Implementation/src/edu/kit/exp/impl/groupmeter/server/res/game/ktaneMac.app/Contents/MacOS/Keep " +
+////                            "Talking and Nobody Explodes";
+//
+//        } else {
+//            logger.info("OS could not be determined. Therefore game exe was not set");
+//        }
     }
 
     public void goStandalone(int numberOfGames) {
@@ -284,4 +314,53 @@ public class KtaneHandler {
         return false;
     }
 
+//    /**
+//     * Writes the performance metrics of a current round to a csv corresponding to the experiment.
+//     */
+//    private void writePerformanceMetricsToCSV() {
+//        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss-SSS");
+//        final String fileSeparator = File.separator;
+//        final String CSV_SEPARATOR = ",";
+//        String dataLogFile;
+//
+//        try {
+//            dataLogFile = "data/game" + fileSeparator + firstTs + "_gameData_log.csv";
+////            dataLogFile = "data/metadata" + fileSeparator + LocalDateTime.now().format(dateTimeFormat) + "_expmetadata_log" +
+////                    ".csv";
+//
+//            // Create subfolder if necessary
+//            File targetFile = new File(dataLogFile);
+//            File parent = targetFile.getParentFile();
+//
+//            // If path does not exist and can't be created, throw error.
+//            if (!parent.exists() && !parent.mkdirs()) {
+//                throw new IllegalStateException("Couldn't create dir: " + parent);
+//            }
+//
+//            // If the file is created for the first time, write the header line too.
+//            if (!targetFile.exists()) {
+//                // Write to file
+//                try (BufferedWriter bw = new BufferedWriter((new FileWriter(dataLogFile)))) {
+//                    bw.write("lastLevelName" + CSV_SEPARATOR +
+//                            "remainingTime" + CSV_SEPARATOR +
+//                            "strikes");
+//                }
+//            }
+//
+//            // Write game data to file
+//            try (BufferedWriter bw = new BufferedWriter((new FileWriter(dataLogFile, true)))) {
+//                bw.newLine();
+//                bw.write(lastLevelName + CSV_SEPARATOR +
+//                        solvableModules + CSV_SEPARATOR +
+//                        solvedModules + CSV_SEPARATOR +
+//                        modules + CSV_SEPARATOR +
+//                        timeLeft + CSV_SEPARATOR +
+//                        strikes + CSV_SEPARATOR +
+//                        bombState);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

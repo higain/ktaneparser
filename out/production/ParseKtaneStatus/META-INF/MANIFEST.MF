@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Class-Path: json-simple-1.1.1.jar fluent-hc-4.5.3.jar json-simple-1.1.
+ 1.jar httpclient-cache-4.5.3.jar httpclient-win-4.5.3.jar httpclient-
+ 4.5.3.jar commons-logging-1.2.jar jna-platform-4.4.0.jar httpcore-4.4
+ .5.jar jna-4.4.0.jar httpcore-4.4.6.jar httpclient-4.5.3.jar httpmime
+ -4.5.3.jar commons-codec-1.9.jar
+edu.kit.ktane.Main-Class: edu.kit.ktane.Main
+

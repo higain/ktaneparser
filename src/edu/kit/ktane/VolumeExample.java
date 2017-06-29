@@ -1,11 +1,10 @@
-import java.io.IOException;
+package edu.kit.ktane;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 

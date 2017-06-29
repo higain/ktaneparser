@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact name="ParseKtaneStatus:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ParseKtaneStatus_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ParseKtaneStatus.jar">
+        <element id="module-output" name="ParseKtaneStatus" />
+      </element>
+      <element id="library" level="project" name="json" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/json-simple-1.1.1.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/fluent-hc-4.5.3.jar" />
+      <element id="library" level="project" name="json-simple-1.1.1" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/httpclient-cache-4.5.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/httpclient-win-4.5.3.jar" />
+      <element id="library" level="project" name="httpclient-4.5.3" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/commons-logging-1.2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/jna-platform-4.4.0.jar" />
+      <element id="library" level="project" name="httpcore-4.4.5" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/jna-4.4.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/httpcore-4.4.6.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/httpclient-4.5.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/httpmime-4.5.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/libs/ApacheHttpLib/commons-codec-1.9.jar" />
+    </root>
+  </artifact>
+</component>
