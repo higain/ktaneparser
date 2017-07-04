@@ -87,6 +87,18 @@ public class KtaneHandler {
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
         schlafen(3000);
+
+        windowHandler = new WindowHandler();
+        windowHandler.toBackground(true);
+        System.out.println("Moving to Background");
+
+        schlafen(6000);
+
+        windowHandler.toBackground(false);
+        System.out.println("Moving to Foreground");
+
+        schlafen(10000);
+
         stopGame(runningGame);
         System.out.println("Shutting down game");
         schlafen(7000);
