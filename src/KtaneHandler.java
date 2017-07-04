@@ -8,6 +8,7 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
+import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -142,6 +143,12 @@ public class KtaneHandler {
     public void initialize() {
         // System.out.println("Reading log file: " + logFile);
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
+
+        /*JFrame frame = new JFrame("on top frame");
+        frame.setSize(1280, 20);
+        frame.setLocation(0, 0);
+        frame.setVisible(true);
+        frame.setAlwaysOnTop(true);*/
     }
 
     public boolean stopGame(String pid) {
