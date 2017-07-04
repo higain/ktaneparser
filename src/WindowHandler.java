@@ -87,7 +87,7 @@ public class WindowHandler {
             HWND_BOTTOM = new Pointer(1);
         }
         else {
-            HWND_BOTTOM = new Pointer(0);
+            HWND_BOTTOM = new Pointer(-1);
         }
 
         return user32.SetWindowPos(hWnd, HWND_BOTTOM, 0, 0, 1280, 1020, 0);
