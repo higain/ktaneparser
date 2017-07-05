@@ -1,14 +1,15 @@
-package edu.kit.ktane;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
+import javax.swing.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by maxis on 17.05.2017.
@@ -53,31 +54,6 @@ public class KtaneHandler {
     KtaneJsonHandler ktjshandler;
 
     public KtaneHandler() {
-//        if (OS == null) {
-//            OS = System.getProperty("os.name");
-//        }
-//
-//        if (OS.startsWith("Windows")) {
-//            logFile = "logs/ktane.log";                                             // New version with steam
-//            ktaneFromSteam = new String[]{"C:/Program Files (x86)/Steam/Steam.exe", "-applaunch", "341800"};
-////            ktaneExeLocation = "C:/Users/exp/Desktop/ktane/ktane.exe";
-////                    System.getProperty("user.dir") +
-////                            "/Exp_Implementation/src/edu/kit/exp/impl/groupmeter/server/res/game/ktaneWin/ktane.exe";
-////            logFile = "C:/Users/exp/Desktop/ktane/logs/ktane.log";
-//
-//        } else if (OS.startsWith("Mac")) {
-////            logFile = "/Users/michaelknierim/Desktop/game/logs/ktane.log";        // Old version without steam
-//            logFile = "logs/ktane.log";                                             // New version with steam
-//            ktaneFromSteam = new String[]{"/Applications/Steam.app/Contents/MacOS/steam_osx", "-applaunch", "341800"};
-////            ktaneExeLocation =
-////                    "/Users/michaelknierim/Desktop/game/ktaneMac.app/Contents/MacOS/Keep Talking and Nobody Explodes";
-////                    System.getProperty("user.dir") +
-////                            "/Exp_Implementation/src/edu/kit/exp/impl/groupmeter/server/res/game/ktaneMac.app/Contents/MacOS/Keep " +
-////                            "Talking and Nobody Explodes";
-//
-//        } else {
-//            logger.info("OS could not be determined. Therefore game exe was not set");
-//        }
     }
 
     public void goStandalone(int numberOfGames) {
