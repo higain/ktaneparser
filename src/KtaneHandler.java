@@ -1,9 +1,7 @@
 import java.io.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -33,7 +31,7 @@ public class KtaneHandler {
             "mod_gfpt2_3bomb4", "mod_gfpt2_3bomb5", "mod_gfpt2_3bomb6",
             "mod_gfpt2_3bomb7", "mod_gfpt2_3bomb8", "mod_gfpt2_3bomb9",
             "mod_gfpt2_3bomb10", "mod_gfpt2_3bomb11", "mod_gfpt2_3bomb12"};
-    private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167"};
+    private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
 
     private String runningGame;
     private boolean run;
@@ -45,6 +43,11 @@ public class KtaneHandler {
     private String timeLeft, bombState;
     private long strikes;
 
+    private String tmpSolved= "";
+    private long tmpStrikes = 0;
+
+    private ArrayList<String> logDiffInBomb;
+
     private WindowHandler windowHandler;
 
 
@@ -53,6 +56,10 @@ public class KtaneHandler {
     public KtaneHandler() {
     }
 
+    /**
+     * Takes number of games which should be played and executes from 1 to numberOfGames until finished
+     * @param numberOfGames Number of games which should be played
+     */
     public void goStandalone(int numberOfGames) {
         while (numberOfGames > numberOfRounds) {
             System.out.println("Start game Nr. " + numberOfRounds + " of " + numberOfGames);
@@ -63,6 +70,10 @@ public class KtaneHandler {
         System.out.println("Experiment zu ende!");
     }
 
+    /**
+     * Takes one bomb-id (from 1-10/12) and executes this one only
+     * @param gameId Which predefined bomb should be played
+     */
     public void go(int gameId) {
         System.out.println("Aktuellster TS: " + latestTs);
 
@@ -88,7 +99,13 @@ public class KtaneHandler {
             parseJson(ktjshandler.fetchBombInfos());
             schlafen(500);
         }
+        // Letztes Mal ausführen, um alles zu loggen
+        parseJson(ktjshandler.fetchBombInfos());
+        schlafen(1000);
         System.out.println("Spiel zu ende");
+        logDiffInBomb.add("Bomb exploded with " + timeLeft + " seconds remaining");
+        System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
         schlafen(3000);
@@ -112,6 +129,28 @@ public class KtaneHandler {
         System.out.println("Experiment zu ende!");
     }
 
+    public void logDiffs() {
+        try {
+            String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
+            if(!diff.equals("")) {
+                logDiffInBomb.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
+                System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+                tmpSolved = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
+            }
+
+            if(tmpStrikes != strikes) {
+                logDiffInBomb.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
+                System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+                tmpStrikes = strikes;
+            }
+
+            // System.out.println(Arrays.toString(logDiffInBomb.toArray()));
+        }
+        catch(NullPointerException npe) {
+            System.out.println("NullPointer in logDiffs: " + npe);
+        }
+    }
+
     public void parseJson(JSONObject jobj) {
         try {
             solvableModules = ((JSONArray) jobj.get("SolvableModules")).toString(); // .replace("\"", "").replace("[", "").replace("]", "").split(",");
@@ -121,7 +160,9 @@ public class KtaneHandler {
             strikes = ((Long) jobj.get("Strikes"));
             bombState = (String) jobj.get("BombState");
 
-            printBombStatus();
+            logDiffs();
+
+            // printBombStatus();
         } catch (NullPointerException npe) {
             System.out.println("Cannot parse Json Object, is the game running?");
             System.out.println(npe.getLocalizedMessage());
@@ -129,9 +170,10 @@ public class KtaneHandler {
     }
 
     public void printBombStatus() {
-        System.out.println("Solvable Modules: " + solvableModules + " " + "Solved Modules: " + solvedModules + " " +
-                "Modules to solve: " + modules + " " + "Time left: " + timeLeft + " " + "Strikes: " + strikes +
-                " " + "State: " + bombState);
+        System.out.println("sm: " + solvableModules + " " + "sdm: " + solvedModules + " " +
+                "all: " + modules + " " + "t: " +
+                timeLeft + " " + "st: " + strikes +
+                " " + "s: " + bombState);
     }
 
     public boolean schlafen(long mil) {
@@ -147,6 +189,7 @@ public class KtaneHandler {
     public void initialize() {
         // System.out.println("Reading log file: " + logFile);
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
+        logDiffInBomb = new ArrayList<>();
 
         /*JFrame frame = new JFrame("on top frame");
         frame.setSize(1280, 20);
@@ -220,7 +263,7 @@ public class KtaneHandler {
     }
 
     public boolean startMission(int missionId) {
-        boolean state = ktjshandler.startMission(missionidslgbfpt1[missionId], "" + seeds[missionId]);
+        boolean state = ktjshandler.startMission(missionidsgfpt2[missionId], "" + seeds[missionId]);
         return state;
     }
 
