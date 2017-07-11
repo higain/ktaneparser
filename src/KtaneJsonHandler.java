@@ -61,10 +61,8 @@ public class KtaneJsonHandler {
 
             }
         } catch (ClientProtocolException e1) {
-            // TODO Auto-generated catch block
             // e1.printStackTrace();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             // e1.printStackTrace();
         } catch (ParseException e) {
             // e.printStackTrace();
