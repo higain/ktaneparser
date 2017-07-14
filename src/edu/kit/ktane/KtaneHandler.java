@@ -1,30 +1,22 @@
-import java.io.*;
+package edu.kit.ktane;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-
-import javax.swing.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by maxis on 17.05.2017.
- * TODO: Fenster auf eine Seite verschieben, damit Biofeedback angezeigt wird
  */
 public class KtaneHandler {
 
-//    /**
-//     * Logger
-//     */
-//    final Logger logger = Logger.getLogger(getClass().getName());
-
-    // brauch ich nicht private String analyticsFile = "C:/Users/maxis/AppData/LocalLow/Steel Crate Games/Keep Talking and Nobody Explodes/analytics/ktane.csv";
     private String logFile = "logs/ktane.log";
-    // brauch ich nicht private String logDir = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/logs";
     private String ktaneStarter = "D:/workspace/IISM/ktane_start.vbs";
     private String ktaneExeLocation = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/ktane.exe";
     private String[] ktaneFromSteam = {"C:/Program Files (x86)/Steam/Steam.exe", "-applaunch", "341800"};
@@ -48,12 +40,27 @@ public class KtaneHandler {
     private String timeLeft, bombState;
     private long strikes;
 
-    private WindowHandler windowHandler;
-
-
+    WindowHandler windowHandler;
     KtaneJsonHandler ktjshandler;
+    Process ktaneProcess;
 
-    public KtaneHandler() {
+    /**
+     * Singleton pattern.
+     */
+    private static KtaneHandler ktaneHandler = new KtaneHandler();
+
+    private KtaneHandler() {
+
+        // Start the game and initialize the JSON game parser.
+        initializeJSONHandler();
+        runningGame = startGame(ktaneFromSteam);
+        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
+        windowHandler = new WindowHandler();
+        // schlafen(15000);    // TODO: Not sure if needed...
+    }
+
+    public static KtaneHandler getInstance() {
+        return ktaneHandler;
     }
 
     public void goStandalone(int numberOfGames) {
@@ -63,54 +70,49 @@ public class KtaneHandler {
             numberOfRounds++;
         }
 
-        System.out.println("Experiment zu ende!");
+        System.out.println("Experiment zu Ende!");
     }
 
     public void go(int gameId) {
+
         System.out.println("Aktuellster TS: " + latestTs);
 
-        initialize();
-        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
-        runningGame = startGame(ktaneFromSteam);
-        schlafen(15000);
+        // Move window to the foreground
+        windowHandler.toBackground(false);
+        System.out.println("Moving to Foreground");
+        schlafen(2000);     // Short time to give the user time to react to the window now being in the foreground.
+
+        // Start the mission
         while (!startMission(gameId)) {
             schlafen(200);
             System.out.println("Konnte mission nicht starten.");
         }
-        // startMission(numberOfRounds);
-        schlafen(5000);
-        // used for log file parsing latestTs = new Timestamp(new Date().getTime());
+        schlafen(5000);     // Short break until mission has started.
+
+        // Analyze bomb state continuously
         while (bombState == null) {
             parseJson(ktjshandler.fetchBombInfos());
-            schlafen(200);
+            schlafen(200);      // TODO: Consider removing this, if events are not parsed directly from log.
             System.out.println("Mission noch nicht fertig geladen.");
         }
         while (!(bombState.equals("Exploded"))) {
             parseJson(ktjshandler.fetchBombInfos());
             schlafen(500);
         }
-        System.out.println("Spiel zu ende");
+
+        // Finish round.
+        System.out.println("Runde zu ende");
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
         schlafen(3000);
 
-        windowHandler = new WindowHandler();
+        // Move window to the background
         windowHandler.toBackground(true);
         System.out.println("Moving to Background");
 
-        schlafen(6000);
-
-        windowHandler.toBackground(false);
-        System.out.println("Moving to Foreground");
-
-        schlafen(10000);
-
-        stopGame(runningGame);
-        System.out.println("Shutting down game");
-        schlafen(7000);
+        // Reset game metrics.
         strikes = 0;
         timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
-        System.out.println("Experiment zu ende!");
     }
 
     public void parseJson(JSONObject jobj) {
@@ -145,8 +147,7 @@ public class KtaneHandler {
         }
     }
 
-    public void initialize() {
-        // System.out.println("Reading log file: " + logFile);
+    public void initializeJSONHandler() {
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
     }
 
@@ -165,7 +166,7 @@ public class KtaneHandler {
     public String startGame(String[] ktaneLocation) {
         try {
             // Runtime.getRuntime().exec(ktaneLocation);
-            Process ktaneProcess = new ProcessBuilder(ktaneLocation).start();
+            ktaneProcess = new ProcessBuilder(ktaneLocation).start();
 
             System.out.println("Process started");
             boolean started = false;
@@ -219,136 +220,94 @@ public class KtaneHandler {
         return state;
     }
 
-
     /**
+     * Check if the Ktane game is running in the background.
      * @return
      */
-    public boolean processFile() {
-
-        try {
-
-            /*File source = new File(logFile);
-            File dest = new File(logFile+"tmp");
-            try {
-                Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-
-            List<String> tmp = new ArrayList<>();
-            FileReader fr = new FileReader(logFile);
-            BufferedReader br = new BufferedReader(fr);
-            String ch;
-
-            while ((ch = br.readLine()) != null) {
-                // Throw out non-info or non-debug (such as tables, html code, etc)
-                if (ch.startsWith("DEBUG") || ch.startsWith(" INFO")) {
-                    ch = ch.replace("DEBUG ", "");
-                    ch = ch.replace(" INFO ", "");
-                    ch = ch.replaceFirst(",", ".");
-                    tmp.add(ch);
-                    // System.out.println(ch);
-                }
-            }
-            br.close();
-            // System.out.println("Checking " + tmp.size() + " Log entries");
-            int counter = 0;
-            boolean abbruch = false;
-            outerloop:
-            for (int i = tmp.size() - 1; i >= 0; i--) {
-                // Prüfung durchführen, solange die Daten aktueller als die letze Prüfung sind
-                // System.out.println("Gelesener TS: " + tmp.get(i).substring(0, 23));
-                long duration = (2 * 60 * 60 * 1000);
-                Timestamp ts = Timestamp.valueOf(tmp.get(i).substring(0, 23));
-                ts.setTime(ts.getTime() + duration);
-                // System.out.println("Vergleichender TS: " + ts);
-                if (ts.equals(latestTs) || ts.before(latestTs)) {
-                    // System.out.println("Hier waren wir schon!");
-                    Timestamp tsmid = Timestamp.valueOf(tmp.get(tmp.size() - 1).substring(0, 23));
-                    tsmid.setTime(tsmid.getTime() + duration);
-                    latestTs = tsmid;
-                    // System.out.println("Neuer latest TS: " + latestTs);
-                    abbruch = true;
-                    break outerloop;
-                } else {
-                    counter++;
-                    // Wenn OnRoundEnd() in der Log-Datei steht wird true zurück gegeben, da Spiel vorbei
-                    if (tmp.get(i).contains("OnRoundEnd()")) {
-                        System.out.println("Runde zu Ende!");
-                        tmp.clear();
-                        return true;
-                    }
-                }
-            }
-            if (!abbruch) {
-                long duration = (2 * 60 * 60 * 1000);
-                Timestamp tsend = Timestamp.valueOf(tmp.get(tmp.size() - 1).substring(0, 23));
-                tsend.setTime(tsend.getTime() + duration);
-
-                latestTs = tsend;
-                System.out.println("Neuer latest TS: " + latestTs);
-            }
-            if (counter > 0) {
-                System.out.println(counter + " Einträge neu gelesen");
-            }
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(logFile);
-            System.out.println("Dateipfad falsch!");
-            return false;
-        } catch (IOException ioe) {
-            System.out.println("IO-Fehler!");
-            return false;
-        }
-        return false;
+    public boolean isGameStarted() {
+        return ktaneProcess.isAlive();
     }
 
-//    /**
-//     * Writes the performance metrics of a current round to a csv corresponding to the experiment.
+    //    /**
+//     * @return
 //     */
-//    private void writePerformanceMetricsToCSV() {
-//        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss-SSS");
-//        final String fileSeparator = File.separator;
-//        final String CSV_SEPARATOR = ",";
-//        String dataLogFile;
+//    public boolean processFile() {
 //
 //        try {
-//            dataLogFile = "data/game" + fileSeparator + firstTs + "_gameData_log.csv";
-////            dataLogFile = "data/metadata" + fileSeparator + LocalDateTime.now().format(dateTimeFormat) + "_expmetadata_log" +
-////                    ".csv";
 //
-//            // Create subfolder if necessary
-//            File targetFile = new File(dataLogFile);
-//            File parent = targetFile.getParentFile();
+//            /*File source = new File(logFile);
+//            File dest = new File(logFile+"tmp");
+//            try {
+//                Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }*/
 //
-//            // If path does not exist and can't be created, throw error.
-//            if (!parent.exists() && !parent.mkdirs()) {
-//                throw new IllegalStateException("Couldn't create dir: " + parent);
-//            }
+//            List<String> tmp = new ArrayList<>();
+//            FileReader fr = new FileReader(logFile);
+//            BufferedReader br = new BufferedReader(fr);
+//            String ch;
 //
-//            // If the file is created for the first time, write the header line too.
-//            if (!targetFile.exists()) {
-//                // Write to file
-//                try (BufferedWriter bw = new BufferedWriter((new FileWriter(dataLogFile)))) {
-//                    bw.write("lastLevelName" + CSV_SEPARATOR +
-//                            "remainingTime" + CSV_SEPARATOR +
-//                            "strikes");
+//            while ((ch = br.readLine()) != null) {
+//                // Throw out non-info or non-debug (such as tables, html code, etc)
+//                if (ch.startsWith("DEBUG") || ch.startsWith(" INFO")) {
+//                    ch = ch.replace("DEBUG ", "");
+//                    ch = ch.replace(" INFO ", "");
+//                    ch = ch.replaceFirst(",", ".");
+//                    tmp.add(ch);
+//                    // System.out.println(ch);
 //                }
 //            }
-//
-//            // Write game data to file
-//            try (BufferedWriter bw = new BufferedWriter((new FileWriter(dataLogFile, true)))) {
-//                bw.newLine();
-//                bw.write(lastLevelName + CSV_SEPARATOR +
-//                        solvableModules + CSV_SEPARATOR +
-//                        solvedModules + CSV_SEPARATOR +
-//                        modules + CSV_SEPARATOR +
-//                        timeLeft + CSV_SEPARATOR +
-//                        strikes + CSV_SEPARATOR +
-//                        bombState);
+//            br.close();
+//            // System.out.println("Checking " + tmp.size() + " Log entries");
+//            int counter = 0;
+//            boolean abbruch = false;
+//            outerloop:
+//            for (int i = tmp.size() - 1; i >= 0; i--) {
+//                // Prüfung durchführen, solange die Daten aktueller als die letze Prüfung sind
+//                // System.out.println("Gelesener TS: " + tmp.get(i).substring(0, 23));
+//                long duration = (2 * 60 * 60 * 1000);
+//                Timestamp ts = Timestamp.valueOf(tmp.get(i).substring(0, 23));
+//                ts.setTime(ts.getTime() + duration);
+//                // System.out.println("Vergleichender TS: " + ts);
+//                if (ts.equals(latestTs) || ts.before(latestTs)) {
+//                    // System.out.println("Hier waren wir schon!");
+//                    Timestamp tsmid = Timestamp.valueOf(tmp.get(tmp.size() - 1).substring(0, 23));
+//                    tsmid.setTime(tsmid.getTime() + duration);
+//                    latestTs = tsmid;
+//                    // System.out.println("Neuer latest TS: " + latestTs);
+//                    abbruch = true;
+//                    break outerloop;
+//                } else {
+//                    counter++;
+//                    // Wenn OnRoundEnd() in der Log-Datei steht wird true zurück gegeben, da Spiel vorbei
+//                    if (tmp.get(i).contains("OnRoundEnd()")) {
+//                        System.out.println("Runde zu Ende!");
+//                        tmp.clear();
+//                        return true;
+//                    }
+//                }
 //            }
+//            if (!abbruch) {
+//                long duration = (2 * 60 * 60 * 1000);
+//                Timestamp tsend = Timestamp.valueOf(tmp.get(tmp.size() - 1).substring(0, 23));
+//                tsend.setTime(tsend.getTime() + duration);
 //
-//        } catch (Exception e) {
-//            e.printStackTrace();
+//                latestTs = tsend;
+//                System.out.println("Neuer latest TS: " + latestTs);
+//            }
+//            if (counter > 0) {
+//                System.out.println(counter + " Einträge neu gelesen");
+//            }
+//        } catch (FileNotFoundException fnfe) {
+//            System.out.println(logFile);
+//            System.out.println("Dateipfad falsch!");
+//            return false;
+//        } catch (IOException ioe) {
+//            System.out.println("IO-Fehler!");
+//            return false;
 //        }
+//        return false;
 //    }
+
 }
