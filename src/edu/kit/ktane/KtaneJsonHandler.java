@@ -1,5 +1,6 @@
 package edu.kit.ktane;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -61,10 +62,8 @@ public class KtaneJsonHandler {
 
             }
         } catch (ClientProtocolException e1) {
-            // TODO Auto-generated catch block
             // e1.printStackTrace();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             // e1.printStackTrace();
         } catch (ParseException e) {
             // e.printStackTrace();

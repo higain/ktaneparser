@@ -10,9 +10,18 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
+import javax.swing.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by maxis on 17.05.2017.
+ * TODO: Log Ausgabe nur bei Events: - Modul entschärft, Strike erhalten, Bombe entschärft
+ * TODO: Zeit, die pro Modul gebraucht wird (log wann Modul aktiviert wird)
  */
 public class KtaneHandler {
 
@@ -20,15 +29,19 @@ public class KtaneHandler {
     private String ktaneStarter = "D:/workspace/IISM/ktane_start.vbs";
     private String ktaneExeLocation = "C:/Program Files (x86)/Steam/steamapps/common/Keep Talking and Nobody Explodes/ktane.exe";
     private String[] ktaneFromSteam = {"C:/Program Files (x86)/Steam/Steam.exe", "-applaunch", "341800"};
-    private String[] missionIds1 = {"mod_iismkitpretest1_1bomb1", "mod_iismkitpretest1_1bomb2", "mod_iismkitpretest1_1bomb3",
-            "mod_iismkitpretest1_1bomb4", "mod_iismkitpretest1_1bomb5", "mod_iismkitpretest1_1bomb6",
-            "mod_iismkitpretest1_1bomb7", "mod_iismkitpretest1_1bomb8", "mod_iismkitpretest1_1bomb9",
-            "mod_iismkitpretest1_1bomb10"};
-    private String[] missionIds2 = {"mod_iismkitpretest2_2bomb1", "mod_iismkitpretest2_2bomb2", "mod_iismkitpretest2_2bomb3",
-            "mod_iismkitpretest2_2bomb4", "mod_iismkitpretest2_2bomb5", "mod_iismkitpretest2_2bomb6",
-            "mod_iismkitpretest2_2bomb7", "mod_iismkitpretest2_2bomb8", "mod_iismkitpretest2_2bomb9",
-            "mod_iismkitpretest2_2bomb10"};
-    private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167"};
+    private String[] missionidslgbfpt1 = {"mod_lgbfpt1_1bomb1", "mod_lgbfpt1_1bomb2", "mod_lgbfpt1_1bomb3",
+            "mod_lgbfpt1_1bomb4", "mod_lgbfpt1_1bomb5", "mod_lgbfpt1_1bomb6",
+            "mod_lgbfpt1_1bomb7", "mod_lgbfpt1_1bomb8", "mod_lgbfpt1_1bomb9",
+            "mod_lgbfpt1_1bomb10"};
+    private String[] missionidslgbfpt2 = {"mod_lgbfpt2_2bomb1", "mod_lgbfpt2_2bomb2", "mod_lgbfpt2_2bomb3",
+            "mod_lgbfpt2_2bomb4", "mod_lgbfpt2_2bomb5", "mod_lgbfpt2_2bomb6",
+            "mod_lgbfpt2_2bomb7", "mod_lgbfpt2_2bomb8", "mod_lgbfpt2_2bomb9",
+            "mod_lgbfpt2_2bomb10"};
+    private String[] missionidsgfpt2 = {"mod_gfpt2_3bomb1", "mod_gfpt2_3bomb2", "mod_gfpt2_3bomb3",
+            "mod_gfpt2_3bomb4", "mod_gfpt2_3bomb5", "mod_gfpt2_3bomb6",
+            "mod_gfpt2_3bomb7", "mod_gfpt2_3bomb8", "mod_gfpt2_3bomb9",
+            "mod_gfpt2_3bomb10", "mod_gfpt2_3bomb11", "mod_gfpt2_3bomb12"};
+    private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
 
     private String runningGame;
     private boolean run;
@@ -39,6 +52,9 @@ public class KtaneHandler {
     private String solvableModules, modules, solvedModules;
     private String timeLeft, bombState;
     private long strikes;
+    private String tmpSolved= "";
+    private long tmpStrikes = 0;
+    private ArrayList<String> logDiffInBomb;
 
     WindowHandler windowHandler;
     KtaneJsonHandler ktjshandler;
@@ -63,6 +79,10 @@ public class KtaneHandler {
         return ktaneHandler;
     }
 
+    /**
+     * Takes number of games which should be played and executes from 1 to numberOfGames until finished
+     * @param numberOfGames Number of games which should be played
+     */
     public void goStandalone(int numberOfGames) {
         while (numberOfGames > numberOfRounds) {
             System.out.println("Start game Nr. " + numberOfRounds + " of " + numberOfGames);
@@ -73,8 +93,11 @@ public class KtaneHandler {
         System.out.println("Experiment zu Ende!");
     }
 
+    /**
+     * Takes one bomb-id (from 1-10/12) and executes this one only
+     * @param gameId Which predefined bomb should be played
+     */
     public void go(int gameId) {
-
         System.out.println("Aktuellster TS: " + latestTs);
 
         // Move window to the foreground
@@ -95,13 +118,19 @@ public class KtaneHandler {
             schlafen(200);      // TODO: Consider removing this, if events are not parsed directly from log.
             System.out.println("Mission noch nicht fertig geladen.");
         }
+
+        // TODO: Fenster während des Spiels immer im Vordergrund
         while (!(bombState.equals("Exploded"))) {
             parseJson(ktjshandler.fetchBombInfos());
             schlafen(500);
         }
-
-        // Finish round.
+        // Letztes Mal ausführen, um alles zu loggen
+        parseJson(ktjshandler.fetchBombInfos());
+        schlafen(1000);
         System.out.println("Runde zu ende");
+        logDiffInBomb.add("Bomb exploded with " + timeLeft + " seconds remaining");
+        System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
         schlafen(3000);
@@ -115,6 +144,28 @@ public class KtaneHandler {
         timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
     }
 
+    public void logDiffs() {
+        try {
+            String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
+            if(!diff.equals("")) {
+                logDiffInBomb.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
+                System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+                tmpSolved = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
+            }
+
+            if(tmpStrikes != strikes) {
+                logDiffInBomb.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
+                System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+                tmpStrikes = strikes;
+            }
+
+            // System.out.println(Arrays.toString(logDiffInBomb.toArray()));
+        }
+        catch(NullPointerException npe) {
+            System.out.println("NullPointer in logDiffs: " + npe);
+        }
+    }
+
     public void parseJson(JSONObject jobj) {
         try {
             solvableModules = ((JSONArray) jobj.get("SolvableModules")).toString(); // .replace("\"", "").replace("[", "").replace("]", "").split(",");
@@ -124,7 +175,9 @@ public class KtaneHandler {
             strikes = ((Long) jobj.get("Strikes"));
             bombState = (String) jobj.get("BombState");
 
-            printBombStatus();
+            logDiffs();
+
+            // printBombStatus();
         } catch (NullPointerException npe) {
             System.out.println("Cannot parse Json Object, is the game running?");
             System.out.println(npe.getLocalizedMessage());
@@ -132,9 +185,10 @@ public class KtaneHandler {
     }
 
     public void printBombStatus() {
-        System.out.println("Solvable Modules: " + solvableModules + " " + "Solved Modules: " + solvedModules + " " +
-                "Modules to solve: " + modules + " " + "Time left: " + timeLeft + " " + "Strikes: " + strikes +
-                " " + "State: " + bombState);
+        System.out.println("sm: " + solvableModules + " " + "sdm: " + solvedModules + " " +
+                "all: " + modules + " " + "t: " +
+                timeLeft + " " + "st: " + strikes +
+                " " + "s: " + bombState);
     }
 
     public boolean schlafen(long mil) {
@@ -149,6 +203,13 @@ public class KtaneHandler {
 
     public void initializeJSONHandler() {
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
+        logDiffInBomb = new ArrayList<>();
+
+        /*JFrame frame = new JFrame("on top frame");
+        frame.setSize(1280, 20);
+        frame.setLocation(0, 0);
+        frame.setVisible(true);
+        frame.setAlwaysOnTop(true);*/
     }
 
     public boolean stopGame(String pid) {
@@ -216,7 +277,7 @@ public class KtaneHandler {
     }
 
     public boolean startMission(int missionId) {
-        boolean state = ktjshandler.startMission(missionIds1[missionId], "" + seeds[missionId]);
+        boolean state = ktjshandler.startMission(missionidsgfpt2[missionId], "" + seeds[missionId]);
         return state;
     }
 

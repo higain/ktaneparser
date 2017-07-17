@@ -42,9 +42,8 @@ public class WindowHandler {
                     return true;
                 }
 
-                System.out.println("Found window with text " + hWnd + ", total " + ++count
-                        + " Text: " + wText);
-                moveWindow(hWnd.getPointer(), 0, -32, 1280, 1030);
+                //System.out.println("Found window with text " + hWnd + ", total " + ++count + " Text: " + wText);
+                moveWindow(hWnd.getPointer(), 0, -15, 1280, 1030);
                 return true;
             }
         }, null);
@@ -73,8 +72,7 @@ public class WindowHandler {
                     return true;
                 }
 
-                System.out.println("Found window with text " + hWnd + ", total " + ++count
-                        + " Text: " + wText);
+                // System.out.println("Found window with text " + hWnd + ", total " + ++count + " Text: " + wText);
                 toBackground(hWnd.getPointer(), toBack);
                 return true;
             }
@@ -92,7 +90,7 @@ public class WindowHandler {
             HWND_BOTTOM = new Pointer(-1);
         }
 
-        return user32.SetWindowPos(hWnd, HWND_BOTTOM, 0, -32, 1280, 1030, 0);
+        return user32.SetWindowPos(hWnd, HWND_BOTTOM, 0, -15, 1280, 1030, 0);
     }
 
 }
