@@ -7,20 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="961cd84f-0947-4ff2-8a14-1b5ff8727925" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/commons-lang3-3.6.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/gfpt2/Newtonsoft.Json.dll" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/gfpt2/mod.bundle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/lgbfpt1/Newtonsoft.Json.dll" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/lgbfpt1/mod.bundle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/lgbfpt2/Newtonsoft.Json.dll" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/lgbfpt2/mod.bundle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/gfpt2/modInfo.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/lgbfpt1/modInfo.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/missionfiles/lgbfpt2/modInfo.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ParseKtaneStatus.iml" afterPath="$PROJECT_DIR$/ParseKtaneStatus.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/kit/ktane/KtaneHandler.java" afterPath="$PROJECT_DIR$/src/edu/kit/ktane/KtaneHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/kit/ktane/KtaneJsonHandler.java" afterPath="$PROJECT_DIR$/src/edu/kit/ktane/KtaneJsonHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/kit/ktane/WindowHandler.java" afterPath="$PROJECT_DIR$/src/edu/kit/ktane/WindowHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ktaneparser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,8 +33,8 @@
       <file leaf-file-name="BombRound.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/kit/ktane/BombRound.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            <state relative-caret-position="240">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -108,8 +95,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -148,7 +133,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -495,12 +482,21 @@
       <workItem from="1498550896510" duration="1203000" />
       <workItem from="1498650199172" duration="150000" />
       <workItem from="1498724587407" duration="336000" />
-      <workItem from="1500279675696" duration="598000" />
+      <workItem from="1500279675696" duration="670000" />
+      <workItem from="1500291489809" duration="7000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/higain/ktaneparser&#10;&#10;# Conflicts:&#10;#&#9;src/edu/kit/ktane/KtaneHandler.java&#10;#&#9;src/edu/kit/ktane/KtaneJsonHandler.java&#10;">
+      <created>1500280313079</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1500280313079</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13747000" />
+    <option name="totallyTimeSpent" value="13826000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1276" height="777" extended-state="6" />
@@ -515,7 +511,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31361425" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3184765" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -543,6 +539,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'master' of https://github.com/higain/ktaneparser&#10;&#10;# Conflicts:&#10;#&#9;src/edu/kit/ktane/KtaneHandler.java&#10;#&#9;src/edu/kit/ktane/KtaneJsonHandler.java&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/higain/ktaneparser&#10;&#10;# Conflicts:&#10;#&#9;src/edu/kit/ktane/KtaneHandler.java&#10;#&#9;src/edu/kit/ktane/KtaneJsonHandler.java&#10;" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <option name="time" value="2" />
@@ -550,6 +550,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/edu/kit/ktane/BombRound.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/KtaneHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/KtaneJsonHandler.java" />
@@ -612,8 +620,8 @@
     <entry file="file://$PROJECT_DIR$/src/KtaneHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/edu/kit/ktane/BombRound.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        <state relative-caret-position="240">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>

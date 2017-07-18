@@ -1,5 +1,6 @@
 package edu.kit.ktane;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -7,16 +8,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
-
-import javax.swing.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by maxis on 17.05.2017.
@@ -47,36 +42,37 @@ public class KtaneHandler {
     private boolean run;
     public boolean experiment;
     private int numberOfRounds = 0;
-    private Timestamp latestTs = new Timestamp(new Date().getTime());
 
+    // Some data storage variables.
+    private LocalDateTime gameRoundInitiationTimestamp;
+    private Timestamp latestTs = new Timestamp(new Date().getTime());
+//    private LinkedList<GameData> gameDataEvents = new LinkedList();
+    private ArrayList<String> gameEventList;
     private String solvableModules, modules, solvedModules;
     private String timeLeft, bombState;
     private long strikes;
     private String tmpSolved= "";
     private long tmpStrikes = 0;
-    private ArrayList<String> logDiffInBomb;
 
     WindowHandler windowHandler;
     KtaneJsonHandler ktjshandler;
     Process ktaneProcess;
 
-    /**
-     * Singleton pattern.
-     */
-    private static KtaneHandler ktaneHandler = new KtaneHandler();
+    public KtaneHandler(LocalDateTime experimentInitiationTimestamp, LocalDateTime gameRoundInitiationTimestamp) {
 
-    private KtaneHandler() {
+        // Time the game was started in brownie (this is not the TS for when users start defusing).
+        this.gameRoundInitiationTimestamp = gameRoundInitiationTimestamp;
+
+        // Prepare the file writer
+        GameData.prepareGameDataFile(experimentInitiationTimestamp);
 
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
-        runningGame = startGame(ktaneFromSteam);
-        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
+        // TODO: The game should be running already.
+//        runningGame = startGame(ktaneFromSteam);
+//        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
         windowHandler = new WindowHandler();
         // schlafen(15000);    // TODO: Not sure if needed...
-    }
-
-    public static KtaneHandler getInstance() {
-        return ktaneHandler;
     }
 
     /**
@@ -118,18 +114,21 @@ public class KtaneHandler {
             schlafen(200);      // TODO: Consider removing this, if events are not parsed directly from log.
             System.out.println("Mission noch nicht fertig geladen.");
         }
-
-        // TODO: Fenster während des Spiels immer im Vordergrund
+        
+        // TODO: What happens if bomb is solved? Does the loop end then too?
         while (!(bombState.equals("Exploded"))) {
             parseJson(ktjshandler.fetchBombInfos());
             schlafen(500);
         }
+        
         // Letztes Mal ausführen, um alles zu loggen
         parseJson(ktjshandler.fetchBombInfos());
         schlafen(1000);
         System.out.println("Runde zu ende");
-        logDiffInBomb.add("Bomb exploded with " + timeLeft + " seconds remaining");
-        System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+        gameEventList.add("Bomb exploded with " + timeLeft + " seconds remaining");
+        System.out.println(gameEventList.get(gameEventList.size()-1));
+        // TODO: Write game data to file
+        GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
 
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
@@ -148,18 +147,18 @@ public class KtaneHandler {
         try {
             String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
             if(!diff.equals("")) {
-                logDiffInBomb.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
-                System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+                gameEventList.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
+                System.out.println(gameEventList.get(gameEventList.size()-1));
                 tmpSolved = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
             }
 
             if(tmpStrikes != strikes) {
-                logDiffInBomb.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
-                System.out.println(logDiffInBomb.get(logDiffInBomb.size()-1));
+                gameEventList.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
+                System.out.println(gameEventList.get(gameEventList.size()-1));
                 tmpStrikes = strikes;
             }
 
-            // System.out.println(Arrays.toString(logDiffInBomb.toArray()));
+            // System.out.println(Arrays.toString(gameEventList.toArray()));
         }
         catch(NullPointerException npe) {
             System.out.println("NullPointer in logDiffs: " + npe);
@@ -203,13 +202,7 @@ public class KtaneHandler {
 
     public void initializeJSONHandler() {
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
-        logDiffInBomb = new ArrayList<>();
-
-        /*JFrame frame = new JFrame("on top frame");
-        frame.setSize(1280, 20);
-        frame.setLocation(0, 0);
-        frame.setVisible(true);
-        frame.setAlwaysOnTop(true);*/
+        gameEventList = new ArrayList<>();
     }
 
     public boolean stopGame(String pid) {
@@ -370,5 +363,4 @@ public class KtaneHandler {
 //        }
 //        return false;
 //    }
-
 }
