@@ -39,7 +39,7 @@ public class KtaneHandler {
     private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
 
     private String runningGame;
-    private boolean run;
+    private boolean isRoundRunning = false;
     public boolean experiment;
     private int numberOfRounds = 0;
 
@@ -93,8 +93,11 @@ public class KtaneHandler {
      * Takes one bomb-id (from 1-10/12) and executes this one only
      * @param gameId Which predefined bomb should be played
      */
-    public void go(int gameId) {
+    public Boolean go(int gameId) {
         System.out.println("Aktuellster TS: " + latestTs);
+
+        // Set flag that round is starting.
+        isRoundRunning = true;
 
         // Move window to the foreground
         windowHandler.toBackground(false);
@@ -138,9 +141,14 @@ public class KtaneHandler {
         windowHandler.toBackground(true);
         System.out.println("Moving to Background");
 
+        // Set flag that round is over.
+        isRoundRunning = false;
+
         // Reset game metrics.
         strikes = 0;
         timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
+
+        return isRoundRunning;
     }
 
     public void logDiffs() {
@@ -280,6 +288,14 @@ public class KtaneHandler {
      */
     public boolean isGameStarted() {
         return ktaneProcess.isAlive();
+    }
+
+    /**
+     * Check if a bomb round is running in the background.
+     * @return
+     */
+    public boolean isRoundRunning() {
+        return isRoundRunning;
     }
 
     //    /**
