@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.awt.event.InputEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.awt.*;
 
 /**
  * Created by maxis on 17.05.2017.
@@ -69,10 +71,33 @@ public class KtaneHandler {
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
         // TODO: The game should be running already.
-//        runningGame = startGame(ktaneFromSteam);
+        runningGame = startGame(ktaneFromSteam);
 //        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
         windowHandler = new WindowHandler();
-        // schlafen(15000);    // TODO: Not sure if needed...
+        schlafen(10000);    // TODO: Not sure if needed...
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(300, 300);
+            robot.mousePress( InputEvent.BUTTON1_MASK );
+            robot.mouseRelease( InputEvent.BUTTON1_MASK );
+            // System.out.println("Mouse press bei 300, 300");
+        } catch (AWTException e) {
+            System.out.println("Mouse click failed!");
+        }
+        schlafen(1500);
+        windowHandler.toBackground(false);
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(750, 820
+            );
+            robot.mousePress( InputEvent.BUTTON1_MASK );
+            robot.mouseRelease( InputEvent.BUTTON1_MASK );
+            // System.out.println("Mouse press bei 589, 668");
+        } catch (AWTException e) {
+            System.out.println("Mouse click failed!");
+        }
+        schlafen(500);
+
     }
 
     /**
@@ -136,6 +161,9 @@ public class KtaneHandler {
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
         schlafen(3000);
+
+        // ktaneProcess.destroyForcibly();
+        // stopGame();
 
         // Move window to the background
         windowHandler.toBackground(true);
