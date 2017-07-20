@@ -43,7 +43,7 @@ public class WindowHandler {
                 }
 
                 //System.out.println("Found window with text " + hWnd + ", total " + ++count + " Text: " + wText);
-                moveWindow(hWnd.getPointer(), 0, -15, 1280, 1030);
+                moveWindow(hWnd.getPointer(), 0, -25, 1435, 1105);
                 return true;
             }
         }, null);

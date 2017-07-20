@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.awt.*;
 import java.awt.event.InputEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.awt.*;
 
 /**
  * Created by maxis on 17.05.2017.
@@ -156,17 +156,17 @@ public class KtaneHandler {
         gameEventList.add("Bomb exploded with " + timeLeft + " seconds remaining");
         System.out.println(gameEventList.get(gameEventList.size()-1));
         // TODO: Write game data to file
-        GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
+//        GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
 
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
         schlafen(3000);
 
-        // ktaneProcess.destroyForcibly();
-        // stopGame();
+        ktaneProcess.destroyForcibly();
+//        stopGame();
 
         // Move window to the background
-        windowHandler.toBackground(true);
+//        windowHandler.toBackground(true);
         System.out.println("Moving to Background");
 
         // Set flag that round is over.
@@ -210,7 +210,7 @@ public class KtaneHandler {
             strikes = ((Long) jobj.get("Strikes"));
             bombState = (String) jobj.get("BombState");
 
-            logDiffs();
+//            logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {
