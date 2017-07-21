@@ -71,33 +71,9 @@ public class KtaneHandler {
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
         // TODO: The game should be running already.
-        runningGame = startGame(ktaneFromSteam);
+//        runningGame = startGame(ktaneFromSteam);
 //        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
         windowHandler = new WindowHandler();
-        schlafen(10000);    // TODO: Not sure if needed...
-        try {
-            Robot robot = new Robot();
-            robot.mouseMove(300, 300);
-            robot.mousePress( InputEvent.BUTTON1_MASK );
-            robot.mouseRelease( InputEvent.BUTTON1_MASK );
-            // System.out.println("Mouse press bei 300, 300");
-        } catch (AWTException e) {
-            System.out.println("Mouse click failed!");
-        }
-        schlafen(1500);
-        windowHandler.toBackground(false);
-        try {
-            Robot robot = new Robot();
-            robot.mouseMove(750, 820
-            );
-            robot.mousePress( InputEvent.BUTTON1_MASK );
-            robot.mouseRelease( InputEvent.BUTTON1_MASK );
-            // System.out.println("Mouse press bei 589, 668");
-        } catch (AWTException e) {
-            System.out.println("Mouse click failed!");
-        }
-        schlafen(500);
-
     }
 
     /**
@@ -124,16 +100,19 @@ public class KtaneHandler {
         // Set flag that round is starting.
         isRoundRunning = true;
 
-        // Move window to the foreground
-        windowHandler.toBackground(false);
-        System.out.println("Moving to Foreground");
-        schlafen(2000);     // Short time to give the user time to react to the window now being in the foreground.
-
         // Start the mission
         while (!startMission(gameId)) {
             schlafen(200);
             System.out.println("Konnte mission nicht starten.");
         }
+
+        // Wait briefly before showing the window, so that users only see the loading screen.
+        schlafen(750);
+
+        // Move window to the foreground
+        windowHandler.toBackground(false);
+        System.out.println("Moving to Foreground");
+
         schlafen(5000);     // Short break until mission has started.
 
         // Analyze bomb state continuously
@@ -160,14 +139,22 @@ public class KtaneHandler {
 
         bombState = null;
         System.out.println("Waiting for Process: " + runningGame);
+        schlafen(4000);
+
+        // Click Worker to return the screen to the main menu.
+        // TODO: This does not work yet...
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(650, 750);
+            robot.mousePress( InputEvent.BUTTON1_MASK );
+            robot.mouseRelease( InputEvent.BUTTON1_MASK );
+        } catch (AWTException e) {
+            System.out.println("Mouse click failed!");
+        }
         schlafen(3000);
 
-        ktaneProcess.destroyForcibly();
+//        ktaneProcess.destroyForcibly();
 //        stopGame();
-
-        // Move window to the background
-//        windowHandler.toBackground(true);
-        System.out.println("Moving to Background");
 
         // Set flag that round is over.
         isRoundRunning = false;
@@ -175,6 +162,10 @@ public class KtaneHandler {
         // Reset game metrics.
         strikes = 0;
         timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
+
+        // Move window to the background
+        windowHandler.toBackground(true);
+        System.out.println("Moving to Background");
 
         return isRoundRunning;
     }

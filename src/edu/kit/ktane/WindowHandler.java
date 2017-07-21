@@ -43,7 +43,7 @@ public class WindowHandler {
                 }
 
                 //System.out.println("Found window with text " + hWnd + ", total " + ++count + " Text: " + wText);
-                moveWindow(hWnd.getPointer(), 0, -25, 1435, 1105);
+                moveWindow(hWnd.getPointer(), 0, -30, 1450, 1115);
                 return true;
             }
         }, null);
@@ -90,7 +90,7 @@ public class WindowHandler {
             HWND_BOTTOM = new Pointer(-1);
         }
 
-        return user32.SetWindowPos(hWnd, HWND_BOTTOM, 0, -15, 1280, 1030, 0);
+        return user32.SetWindowPos(hWnd, HWND_BOTTOM, 0, -30, 1450, 1115, 0);
     }
 
 }
