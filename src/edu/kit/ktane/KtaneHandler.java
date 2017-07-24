@@ -75,8 +75,11 @@ public class KtaneHandler {
         // Initialize WindowHandler for back- and foreground management
         windowHandler = new WindowHandler();
 
+    }
+
+    public void startupGame() {
         // TODO: Start game the first time, then only check if its running
-        if(runningGame != null) {
+        if (runningGame != null) {
             System.out.println("Game pid: " + runningGame);
         }
         if (runningGame == null || runningGame.equals("")) {
@@ -169,7 +172,7 @@ public class KtaneHandler {
         System.out.println("Mission running, analyze it!");
         try {
             System.out.println("BombState: " + bombState);
-        } catch(NullPointerException npe) {
+        } catch (NullPointerException npe) {
             System.out.println("BombState is null");
         } catch (Exception e) {
             System.out.println(e);
@@ -186,15 +189,20 @@ public class KtaneHandler {
 
         // Letztes Mal ausführen, um alles zu loggen
         parseJson(ktjshandler.fetchBombInfos());
-        if(bombState.equals("Exploded") && !timeLeft.equals("00.00") ) {
-            gameEventList.add("Got strike nr " + ((int) strikes+1) + " with " + timeLeft + " seconds remaining");
+        if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
+            gameEventList.add("Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining");
         }
         schlafen(1000);
         // System.out.println("Runde zu ende");
         gameEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
         System.out.println(gameEventList.get(gameEventList.size() - 1));
         // TODO: Write game data to file
-//        GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
+        try {
+            GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
+        } catch (Exception e) {
+            System.out.println("Error!");
+            System.out.println(e);
+        }
 
         // System.out.println("Waiting for Process: " + runningGame);
         schlafen(15000);
@@ -204,10 +212,9 @@ public class KtaneHandler {
 
         try {
             Robot robot = new Robot();
-            if(bombState.equals("Exploded")) {
+            if (bombState.equals("Exploded")) {
                 robot.mouseMove(690, 750);
-            }
-            else if(bombState.equals("Defused")) {
+            } else if (bombState.equals("Defused")) {
                 robot.mouseMove(750, 750);
             }
             robot.mousePress(InputEvent.BUTTON1_MASK);
@@ -264,7 +271,7 @@ public class KtaneHandler {
             strikes = ((Long) jobj.get("Strikes"));
             bombState = (String) jobj.get("BombState");
 
-            if(!bombState.equals("") && timeLeft.equals("")) {
+            if (!bombState.equals("") && timeLeft.equals("")) {
                 bombState = "";
             }
 
