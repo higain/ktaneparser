@@ -1,5 +1,6 @@
 package edu.kit.ktane;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -40,7 +41,7 @@ public class KtaneHandler {
             "mod_gfpt2_3bomb10", "mod_gfpt2_3bomb11", "mod_gfpt2_3bomb12"};
     private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
 
-    private String runningGame;
+    static private String runningGame;
     private boolean isRoundRunning = false;
     public boolean experiment;
     private int numberOfRounds = 0;
@@ -48,17 +49,17 @@ public class KtaneHandler {
     // Some data storage variables.
     private LocalDateTime gameRoundInitiationTimestamp;
     private Timestamp latestTs = new Timestamp(new Date().getTime());
-//    private LinkedList<GameData> gameDataEvents = new LinkedList();
+    //    private LinkedList<GameData> gameDataEvents = new LinkedList();
     private ArrayList<String> gameEventList;
     private String solvableModules, modules, solvedModules;
     private String timeLeft, bombState;
     private long strikes;
-    private String tmpSolved= "";
+    private String tmpSolved = "";
     private long tmpStrikes = 0;
 
     WindowHandler windowHandler;
     KtaneJsonHandler ktjshandler;
-    Process ktaneProcess;
+    static Process ktaneProcess;
 
     public KtaneHandler(LocalDateTime experimentInitiationTimestamp, LocalDateTime gameRoundInitiationTimestamp) {
 
@@ -70,14 +71,51 @@ public class KtaneHandler {
 
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
-        // TODO: The game should be running already.
-//        runningGame = startGame(ktaneFromSteam);
-//        System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
+
+        // Initialize WindowHandler for back- and foreground management
         windowHandler = new WindowHandler();
+
+        // TODO: Start game the first time, then only check if its running
+        if(runningGame != null) {
+            System.out.println("Game pid: " + runningGame);
+        }
+        if (runningGame == null || runningGame.equals("")) {
+            runningGame = startGame(ktaneFromSteam);
+            System.out.println("Game pid: " + runningGame);
+            System.out.println("Starting Game from " + Arrays.toString(ktaneFromSteam));
+            windowHandler = new WindowHandler();
+            schlafen(10000);    // TODO: Not sure if needed...
+
+            // Intro-Screen
+            windowHandler.toBackground(false);
+            try {
+                Robot robot = new Robot();
+                robot.mouseMove(300, 300);
+                robot.mousePress(InputEvent.BUTTON1_MASK);
+                robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                System.out.println("Mouse press bei 300, 300");
+            } catch (AWTException e) {
+                System.out.println("Mouse click failed!");
+            }
+            schlafen(1500);
+            // Enable Mods
+            windowHandler.toBackground(false);
+            try {
+                Robot robot = new Robot();
+                robot.mouseMove(830, 900
+                );
+                robot.mousePress(InputEvent.BUTTON1_MASK);
+                robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                System.out.println("Mouse press bei 800, 900");
+            } catch (AWTException e) {
+                System.out.println("Mouse click failed!");
+            }
+        }
     }
 
     /**
      * Takes number of games which should be played and executes from 1 to numberOfGames until finished
+     *
      * @param numberOfGames Number of games which should be played
      */
     public void goStandalone(int numberOfGames) {
@@ -92,15 +130,22 @@ public class KtaneHandler {
 
     /**
      * Takes one bomb-id (from 1-10/12) and executes this one only
+     *
      * @param gameId Which predefined bomb should be played
      */
     public Boolean go(int gameId) {
+
+        // Reset game metrics.
+        resetVariables();
+
         System.out.println("Aktuellster TS: " + latestTs);
 
         // Set flag that round is starting.
         isRoundRunning = true;
+        schlafen(3000);
 
         // Start the mission
+
         while (!startMission(gameId)) {
             schlafen(200);
             System.out.println("Konnte mission nicht starten.");
@@ -116,52 +161,71 @@ public class KtaneHandler {
         schlafen(5000);     // Short break until mission has started.
 
         // Analyze bomb state continuously
-        while (bombState == null) {
+        while (bombState == null || bombState.equals("")) {
             parseJson(ktjshandler.fetchBombInfos());
-            schlafen(200);      // TODO: Consider removing this, if events are not parsed directly from log.
+            schlafen(1000);      // TODO: Consider removing this, if events are not parsed directly from log.
             System.out.println("Mission noch nicht fertig geladen.");
         }
-        
-        // TODO: What happens if bomb is solved? Does the loop end then too?
-        while (!(bombState.equals("Exploded"))) {
-            parseJson(ktjshandler.fetchBombInfos());
-            schlafen(500);
+        System.out.println("Mission running, analyze it!");
+        try {
+            System.out.println("BombState: " + bombState);
+        } catch(NullPointerException npe) {
+            System.out.println("BombState is null");
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        
+
+        boolean runWorker = true;
+        while (runWorker) {
+            if ((bombState.equals("Exploded")) || bombState.equals("Defused")) {
+                runWorker = false;
+            }
+            parseJson(ktjshandler.fetchBombInfos());
+            schlafen(50);
+        }
+
         // Letztes Mal ausführen, um alles zu loggen
         parseJson(ktjshandler.fetchBombInfos());
+        if(bombState.equals("Exploded") && !timeLeft.equals("00.00") ) {
+            gameEventList.add("Got strike nr " + ((int) strikes+1) + " with " + timeLeft + " seconds remaining");
+        }
         schlafen(1000);
-        System.out.println("Runde zu ende");
-        gameEventList.add("Bomb exploded with " + timeLeft + " seconds remaining");
-        System.out.println(gameEventList.get(gameEventList.size()-1));
+        // System.out.println("Runde zu ende");
+        gameEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
+        System.out.println(gameEventList.get(gameEventList.size() - 1));
         // TODO: Write game data to file
 //        GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
 
-        bombState = null;
-        System.out.println("Waiting for Process: " + runningGame);
-        schlafen(4000);
+        // System.out.println("Waiting for Process: " + runningGame);
+        schlafen(15000);
 
         // Click Worker to return the screen to the main menu.
         // TODO: This does not work yet...
+
         try {
             Robot robot = new Robot();
-            robot.mouseMove(650, 750);
-            robot.mousePress( InputEvent.BUTTON1_MASK );
-            robot.mouseRelease( InputEvent.BUTTON1_MASK );
+            if(bombState.equals("Exploded")) {
+                robot.mouseMove(690, 750);
+            }
+            else if(bombState.equals("Defused")) {
+                robot.mouseMove(750, 750);
+            }
+            robot.mousePress(InputEvent.BUTTON1_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_MASK);
         } catch (AWTException e) {
             System.out.println("Mouse click failed!");
         }
+
         schlafen(3000);
 
-//        ktaneProcess.destroyForcibly();
 //        stopGame();
-
-        // Set flag that round is over.
-        isRoundRunning = false;
 
         // Reset game metrics.
         strikes = 0;
-        timeLeft = bombState = runningGame = solvableModules = modules = solvedModules = null;
+        timeLeft = bombState = solvableModules = modules = solvedModules = null;
+
+        // Set flag that round is over.
+        isRoundRunning = false;
 
         // Move window to the background
         windowHandler.toBackground(true);
@@ -173,21 +237,20 @@ public class KtaneHandler {
     public void logDiffs() {
         try {
             String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
-            if(!diff.equals("")) {
+            if (!diff.equals("")) {
                 gameEventList.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
-                System.out.println(gameEventList.get(gameEventList.size()-1));
+                System.out.println(gameEventList.get(gameEventList.size() - 1));
                 tmpSolved = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
             }
 
-            if(tmpStrikes != strikes) {
+            if (tmpStrikes != strikes) {
                 gameEventList.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
-                System.out.println(gameEventList.get(gameEventList.size()-1));
+                System.out.println(gameEventList.get(gameEventList.size() - 1));
                 tmpStrikes = strikes;
             }
 
             // System.out.println(Arrays.toString(gameEventList.toArray()));
-        }
-        catch(NullPointerException npe) {
+        } catch (NullPointerException npe) {
             System.out.println("NullPointer in logDiffs: " + npe);
         }
     }
@@ -201,7 +264,11 @@ public class KtaneHandler {
             strikes = ((Long) jobj.get("Strikes"));
             bombState = (String) jobj.get("BombState");
 
-//            logDiffs();
+            if(!bombState.equals("") && timeLeft.equals("")) {
+                bombState = "";
+            }
+
+            logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {
@@ -220,6 +287,7 @@ public class KtaneHandler {
     public boolean schlafen(long mil) {
         try {
             Thread.sleep(mil);
+
             return true;
         } catch (InterruptedException ie) {
             System.out.println("Sleep Fehler");
@@ -227,18 +295,31 @@ public class KtaneHandler {
         }
     }
 
+    public void resetVariables() {
+        strikes = 0;
+        timeLeft = null;
+        bombState = null;
+        solvableModules = null;
+        modules = null;
+        solvedModules = null;
+    }
+
     public void initializeJSONHandler() {
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
         gameEventList = new ArrayList<>();
     }
 
-    public boolean stopGame(String pid) {
-        String cmd = "taskkill /F /PID " + pid;
-        try {
-            Runtime.getRuntime().exec(cmd);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+    public boolean stopGame() {
+        if (runningGame != null && !runningGame.equals("")) {
+            String cmd = "taskkill /F /PID " + runningGame;
+            try {
+                Runtime.getRuntime().exec(cmd);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
             return false;
         }
     }
@@ -303,6 +384,7 @@ public class KtaneHandler {
 
     /**
      * Check if the Ktane game is running in the background.
+     *
      * @return
      */
     public boolean isGameStarted() {
@@ -311,6 +393,7 @@ public class KtaneHandler {
 
     /**
      * Check if a bomb round is running in the background.
+     *
      * @return
      */
     public boolean isRoundRunning() {

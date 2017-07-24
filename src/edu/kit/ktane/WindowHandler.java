@@ -55,6 +55,8 @@ public class WindowHandler {
         return user32.MoveWindow(hWnd, x, y, nWidth, nHeight, bRepaint);
     }
 
+    // if toBack true: in Background schieben
+    // if toBack false: in Foreground ziehen
     public void toBackground(boolean toBack) {
         user32.EnumWindows(new WNDENUMPROC() {
             int count = 0;
@@ -78,6 +80,7 @@ public class WindowHandler {
             }
         }, null);
     }
+
 
     // if toBack true: in Background schieben
     // if toBack false: in Foreground ziehen
