@@ -1,6 +1,5 @@
 package edu.kit.ktane;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -145,7 +144,7 @@ public class KtaneHandler {
 
         // Set flag that round is starting.
         isRoundRunning = true;
-        schlafen(3000);
+        // schlafen(3000);
 
         // Start the mission
 
@@ -192,6 +191,7 @@ public class KtaneHandler {
         if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
             gameEventList.add("Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining");
         }
+
         schlafen(1000);
         // System.out.println("Runde zu ende");
         gameEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
@@ -205,11 +205,9 @@ public class KtaneHandler {
         }
 
         // System.out.println("Waiting for Process: " + runningGame);
-        schlafen(15000);
+        schlafen(5000);
 
         // Click Worker to return the screen to the main menu.
-        // TODO: This does not work yet...
-
         try {
             Robot robot = new Robot();
             if (bombState.equals("Exploded")) {
@@ -223,7 +221,7 @@ public class KtaneHandler {
             System.out.println("Mouse click failed!");
         }
 
-        schlafen(3000);
+        schlafen(1000);
 
 //        stopGame();
 
@@ -275,7 +273,7 @@ public class KtaneHandler {
                 bombState = "";
             }
 
-            logDiffs();
+            // logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {
