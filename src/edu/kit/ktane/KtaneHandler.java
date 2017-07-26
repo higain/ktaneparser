@@ -205,7 +205,7 @@ public class KtaneHandler {
         }
 
         // System.out.println("Waiting for Process: " + runningGame);
-        schlafen(5000);
+        schlafen(10000);
 
         // Click Worker to return the screen to the main menu.
         try {
@@ -221,7 +221,7 @@ public class KtaneHandler {
             System.out.println("Mouse click failed!");
         }
 
-        schlafen(1000);
+        schlafen(2000);
 
 //        stopGame();
 
