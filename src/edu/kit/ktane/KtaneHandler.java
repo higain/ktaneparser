@@ -66,7 +66,7 @@ public class KtaneHandler {
         this.gameRoundInitiationTimestamp = gameRoundInitiationTimestamp;
 
         // Prepare the file writer
-        GameData.prepareGameDataFile(experimentInitiationTimestamp);
+        // GameData.prepareGameDataFile(experimentInitiationTimestamp);
 
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
@@ -198,7 +198,7 @@ public class KtaneHandler {
         System.out.println(gameEventList.get(gameEventList.size() - 1));
         // TODO: Write game data to file
         try {
-            GameData.writeGameDataToCSVFromMaxisLog(gameEventList);
+            GameData.writeGameDataToCSVFromMaxisLog(gameEventList, gameRoundInitiationTimestamp);
         } catch (Exception e) {
             System.out.println("Error!");
             System.out.println(e);
@@ -273,7 +273,7 @@ public class KtaneHandler {
                 bombState = "";
             }
 
-            // logDiffs();
+            logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {

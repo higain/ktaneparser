@@ -99,7 +99,7 @@ public class GameData {
     public static void writeGameDataToCSV(List<GameData> gameDataList) {
         try {
             // Write to file
-            try (BufferedWriter bw = new BufferedWriter((new FileWriter(dataLogFile, true)))) {
+            try (BufferedWriter bw = new BufferedWriter((new FileWriter(new File(dataLogFile), true)))) {
                 for (GameData gameDate : gameDataList) {
                     bw.write(createDataString(gameDate.getGameDataString()));
                     bw.newLine();
@@ -116,10 +116,11 @@ public class GameData {
      *
      * @param gameDataList
      */
-    public static void writeGameDataToCSVFromMaxisLog(ArrayList<String> gameDataList) {
+    public static void writeGameDataToCSVFromMaxisLog(ArrayList<String> gameDataList, LocalDateTime sessionInitiationTime) {
         try {
             // Write to file
-            try (BufferedWriter bw = new BufferedWriter((new FileWriter(dataLogFile, true)))) {
+            String filename = "data/game/" + sessionInitiationTime.format(dateTimeFormat) + "_expgamedata_log.csv";
+            try (BufferedWriter bw = new BufferedWriter((new FileWriter(new File(filename), true)))) {
                 for (String gameDate : gameDataList) {
                     bw.write(gameDate);
                     bw.newLine();
