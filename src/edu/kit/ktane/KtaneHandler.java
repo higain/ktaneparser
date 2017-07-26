@@ -204,16 +204,22 @@ public class KtaneHandler {
             System.out.println(e);
         }
 
-        // System.out.println("Waiting for Process: " + runningGame);
-        schlafen(10000);
-
         // Click Worker to return the screen to the main menu.
         try {
+            int sleep = 12000;
             Robot robot = new Robot();
             if (bombState.equals("Exploded")) {
-                robot.mouseMove(690, 750);
+                while (sleep >= 0) {
+                    robot.mouseMove(690, 750);
+                    schlafen(100);
+                    sleep = sleep - 100;
+                }
             } else if (bombState.equals("Defused")) {
-                robot.mouseMove(750, 750);
+                while (sleep >= 0) {
+                    robot.mouseMove(750, 750);
+                    schlafen(100);
+                    sleep = sleep - 100;
+                }
             }
             robot.mousePress(InputEvent.BUTTON1_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_MASK);
