@@ -279,7 +279,7 @@ public class KtaneHandler {
                 bombState = "";
             }
 
-            logDiffs();
+            // logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {
