@@ -211,18 +211,23 @@ public class KtaneHandler {
             if (bombState.equals("Exploded")) {
                 while (sleep >= 0) {
                     robot.mouseMove(690, 750);
-                    schlafen(2);
-                    sleep = sleep - 2;
+                    schlafen(1);
+                    sleep = sleep - 1;
                 }
             } else if (bombState.equals("Defused")) {
                 while (sleep >= 0) {
                     robot.mouseMove(750, 750);
-                    schlafen(2);
-                    sleep = sleep - 2;
+                    schlafen(1);
+                    sleep = sleep - 1;
                 }
             }
-            robot.mousePress(InputEvent.BUTTON1_MASK);
-            robot.mouseRelease(InputEvent.BUTTON1_MASK);
+            sleep = 100;
+            while(sleep >= 0) {
+                robot.mousePress(InputEvent.BUTTON1_MASK);
+                robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                schlafen(1);
+                sleep = sleep - 1 ;
+            }
         } catch (AWTException e) {
             System.out.println("Mouse click failed!");
         }
