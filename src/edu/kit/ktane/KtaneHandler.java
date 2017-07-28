@@ -38,7 +38,7 @@ public class KtaneHandler {
             "mod_gfpt2_3bomb4", "mod_gfpt2_3bomb5", "mod_gfpt2_3bomb6",
             "mod_gfpt2_3bomb7", "mod_gfpt2_3bomb8", "mod_gfpt2_3bomb9",
             "mod_gfpt2_3bomb10", "mod_gfpt2_3bomb11", "mod_gfpt2_3bomb12"};
-    private String[] seeds = {"11779", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
+    private String[] seeds = {"11778", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
 
     static private String runningGame;
     private boolean isRoundRunning = false;
@@ -211,14 +211,14 @@ public class KtaneHandler {
             if (bombState.equals("Exploded")) {
                 while (sleep >= 0) {
                     robot.mouseMove(690, 750);
-                    schlafen(100);
-                    sleep = sleep - 100;
+                    schlafen(10);
+                    sleep = sleep - 10;
                 }
             } else if (bombState.equals("Defused")) {
                 while (sleep >= 0) {
                     robot.mouseMove(750, 750);
-                    schlafen(100);
-                    sleep = sleep - 100;
+                    schlafen(10);
+                    sleep = sleep - 10;
                 }
             }
             robot.mousePress(InputEvent.BUTTON1_MASK);
