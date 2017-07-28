@@ -211,14 +211,14 @@ public class KtaneHandler {
             if (bombState.equals("Exploded")) {
                 while (sleep >= 0) {
                     robot.mouseMove(690, 750);
-                    schlafen(10);
-                    sleep = sleep - 10;
+                    schlafen(2);
+                    sleep = sleep - 2;
                 }
             } else if (bombState.equals("Defused")) {
                 while (sleep >= 0) {
                     robot.mouseMove(750, 750);
-                    schlafen(10);
-                    sleep = sleep - 10;
+                    schlafen(2);
+                    sleep = sleep - 2;
                 }
             }
             robot.mousePress(InputEvent.BUTTON1_MASK);
