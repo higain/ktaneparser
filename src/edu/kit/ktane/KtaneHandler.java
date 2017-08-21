@@ -1,6 +1,5 @@
 package edu.kit.ktane;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -212,10 +211,12 @@ public class KtaneHandler {
 
         // Click Worker to return the screen to the main menu.
         try {
-            int sleep = 9000;
+            int sleep = 8500;
             Robot robot = new Robot();
             int x = 0;
             int y = 0;
+            int waitX = 600;
+            int waitY = 300;
 
             if (bombState.equals("Exploded")) {
                 x = 690;
@@ -225,7 +226,8 @@ public class KtaneHandler {
                 y = 750;
             }
             while (sleep >= 0) {
-                robot.mouseMove(9999, 9999);
+                // robot.mouseMove(9999, 9999);
+                robot.mouseMove(waitX, waitY);
                 schlafen(1);
                 sleep = sleep - 1;
             }
@@ -235,6 +237,12 @@ public class KtaneHandler {
                 robot.mouseMove(x, y);
                 robot.mousePress(InputEvent.BUTTON1_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                schlafen(1);
+                sleep = sleep - 1;
+            }
+            sleep = 100;
+            while (sleep >= 0) {
+                robot.mouseMove(waitX, waitY);
                 schlafen(1);
                 sleep = sleep - 1;
             }
@@ -262,9 +270,15 @@ public class KtaneHandler {
 
     public void logDiffs() {
         try {
-            String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
-            if (!diff.equals("")) {
-                gameEventList.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
+//            String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
+
+            // TODO: Check if this is correct.
+            String remainingModules = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
+            Boolean diff = tmpSolved.equals(remainingModules);
+            // if (!diff.equals("")) {
+            if (!diff) {
+                // gameEventList.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
+                gameEventList.add("A module was solved with " + timeLeft + " seconds remaining. The remaining module list is: " + remainingModules);
                 System.out.println(gameEventList.get(gameEventList.size() - 1));
                 tmpSolved = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
             }
@@ -279,7 +293,8 @@ public class KtaneHandler {
         } catch (NullPointerException npe) {
             System.out.println("NullPointer in logDiffs: " + npe);
         } catch (NoClassDefFoundError ncde) {
-            logger.info("Still bringing up the NoClassDefFoundError");
+            // logger.info("Still bringing up the NoClassDefFoundError");
+            ncde.printStackTrace();
         }
     }
 

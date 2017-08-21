@@ -9,15 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="ApacheHttpLib" level="project" />
     <orderEntry type="module-library">
-      <library name="commons-lang3-3.6">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/commons-lang3-3.6.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jna-4.4.0.jar!/" />
@@ -44,5 +35,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="commons-lang3-3.5" level="project" />
   </component>
 </module>
