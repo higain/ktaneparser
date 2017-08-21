@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Created by maxis on 17.05.2017.
@@ -21,6 +22,11 @@ import java.util.Date;
  * TODO: Zeit, die pro Modul gebraucht wird (log wann Modul aktiviert wird)
  */
 public class KtaneHandler {
+
+    /**
+     * Logger
+     */
+    final Logger logger = Logger.getLogger(getClass().getName());
 
     private String logFile = "logs/ktane.log";
     private String ktaneStarter = "D:/workspace/IISM/ktane_start.vbs";
@@ -206,7 +212,7 @@ public class KtaneHandler {
 
         // Click Worker to return the screen to the main menu.
         try {
-            int sleep = 12000;
+            int sleep = 9000;
             Robot robot = new Robot();
             int x = 0;
             int y = 0;
@@ -272,6 +278,8 @@ public class KtaneHandler {
             // System.out.println(Arrays.toString(gameEventList.toArray()));
         } catch (NullPointerException npe) {
             System.out.println("NullPointer in logDiffs: " + npe);
+        } catch (NoClassDefFoundError ncde) {
+            logger.info("Still bringing up the NoClassDefFoundError");
         }
     }
 
@@ -288,7 +296,7 @@ public class KtaneHandler {
                 bombState = "";
             }
 
-            // logDiffs();
+            logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {
@@ -343,7 +351,6 @@ public class KtaneHandler {
             return false;
         }
     }
-
 
     public String startGame(String[] ktaneLocation) {
         try {
