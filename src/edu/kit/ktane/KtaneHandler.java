@@ -211,7 +211,7 @@ public class KtaneHandler {
 
         // Click Worker to return the screen to the main menu.
         try {
-            int sleep = 8500;
+            int sleep = 7500;
             Robot robot = new Robot();
             int x = 0;
             int y = 0;
@@ -232,7 +232,6 @@ public class KtaneHandler {
                 sleep = sleep - 1;
             }
             sleep = 100;
-            windowHandler.toBackground(false);
             while (sleep >= 0) {
                 robot.mouseMove(x, y);
                 robot.mousePress(InputEvent.BUTTON1_MASK);
@@ -240,12 +239,7 @@ public class KtaneHandler {
                 schlafen(1);
                 sleep = sleep - 1;
             }
-            sleep = 100;
-            while (sleep >= 0) {
-                robot.mouseMove(waitX, waitY);
-                schlafen(1);
-                sleep = sleep - 1;
-            }
+            windowHandler.toBackground(false);
         } catch (AWTException e) {
             System.out.println("Mouse click failed!");
         }
