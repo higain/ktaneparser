@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -58,7 +56,7 @@ public class KtaneHandler {
     private String solvableModules, modules, solvedModules;
     private String timeLeft, bombState;
     private long strikes;
-    private String tmpSolved = "";
+    private ArrayList<String> tmpSolved, allModules;
     private long tmpStrikes = 0;
 
     WindowHandler windowHandler;
@@ -75,6 +73,7 @@ public class KtaneHandler {
 
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
+        tmpSolved = new ArrayList<>();
 
         // Initialize WindowHandler for back- and foreground management
         windowHandler = new WindowHandler();
@@ -170,6 +169,7 @@ public class KtaneHandler {
         // Analyze bomb state continuously
         while (bombState == null || bombState.equals("")) {
             parseJson(ktjshandler.fetchBombInfos());
+            logDiffs();
             schlafen(1000);      // TODO: Consider removing this, if events are not parsed directly from log.
             System.out.println("Mission noch nicht fertig geladen.");
         }
@@ -188,13 +188,16 @@ public class KtaneHandler {
                 runWorker = false;
             }
             parseJson(ktjshandler.fetchBombInfos());
-            schlafen(50);
+            logDiffs();
+            schlafen(200);
         }
 
         // Letztes Mal ausführen, um alles zu loggen
         parseJson(ktjshandler.fetchBombInfos());
+        logDiffs();
         if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
             gameEventList.add("Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining");
+            System.out.println(gameEventList.get(gameEventList.size() - 1));
         }
 
         schlafen(1000);
@@ -231,13 +234,13 @@ public class KtaneHandler {
                 schlafen(1);
                 sleep = sleep - 1;
             }
-            sleep = 100;
-            while (sleep >= 0) {
+            sleep = 200;
+            while (!timeLeft.equals("")) {
                 robot.mouseMove(x, y);
                 robot.mousePress(InputEvent.BUTTON1_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                parseJson(ktjshandler.fetchBombInfos());
                 schlafen(1);
-                sleep = sleep - 1;
             }
             windowHandler.toBackground(false);
         } catch (AWTException e) {
@@ -262,39 +265,62 @@ public class KtaneHandler {
         return isRoundRunning;
     }
 
+
     public void logDiffs() {
         try {
-//            String diff = StringUtils.difference(tmpSolved, solvedModules.replace("\"", "").replace("[", "").replace("]", ""));
-
-            // TODO: Check if this is correct.
-            String remainingModules = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
-            Boolean diff = tmpSolved.equals(remainingModules);
-            // if (!diff.equals("")) {
-            if (!diff) {
-                // gameEventList.add("Solved Module " + diff + " with " + timeLeft + " seconds remaining");
-                gameEventList.add("A module was solved with " + timeLeft + " seconds remaining. The remaining module list is: " + remainingModules);
-                System.out.println(gameEventList.get(gameEventList.size() - 1));
-                tmpSolved = solvedModules.replace("\"", "").replace("[", "").replace("]", "");
-            }
-
+            // Diff Strikes
             if (tmpStrikes != strikes) {
                 gameEventList.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
                 System.out.println(gameEventList.get(gameEventList.size() - 1));
                 tmpStrikes = strikes;
             }
 
-            // System.out.println(Arrays.toString(gameEventList.toArray()));
-        } catch (NullPointerException npe) {
-            System.out.println("NullPointer in logDiffs: " + npe);
-        } catch (NoClassDefFoundError ncde) {
-            // logger.info("Still bringing up the NoClassDefFoundError");
-            ncde.printStackTrace();
+            // Diff Modules
+            // Working copies of Strings:
+            String wcSolved = solvedModules.replaceAll("\"", "").replaceAll("\\[", "").replaceAll("\\]", "");
+            ArrayList<String> solvedLive;
+
+            // Processing starts, as soon as one module is solved
+            if (wcSolved.length() > 0) {
+                solvedLive = new ArrayList<>(Arrays.asList(wcSolved.split(",")));
+                // If arrays differ in size, a new module has been solved. The existing elements are removed from the local List and therefore leave the new module
+                // System.out.println(solvedLive.toString());
+                if (tmpSolved == null) {
+                    tmpSolved = new ArrayList<>();
+                }
+                // System.out.println("SolvedLive: " + solvedLive.size() + "TmpSolved: " + tmpSolved.size());
+                if ((solvedLive.size() != tmpSolved.size()) || tmpSolved.toString().equals("[]")) {
+                    ArrayList<String> tmpNewMod = new ArrayList<>(solvedLive);
+                    ArrayList<String> tmpRemaining = new ArrayList<>(allModules);
+                    // Get the newly solved Module
+                    tmpNewMod.removeAll(tmpSolved);
+                    // Get remaining Modules
+                    tmpRemaining.removeAll(solvedLive);
+
+                    gameEventList.add("Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
+                            "The remaining Modules are: " + tmpRemaining.toString());
+                    System.out.println(gameEventList.get(gameEventList.size() - 1));
+
+                    // Update temp variables
+                    tmpSolved.clear();
+                    tmpSolved.addAll(solvedLive);
+                }
+
+            }
+        }
+        catch(Exception e) {
+            logger.info(e.toString());
+            System.out.println("Fehler in logDiff: " + e);
         }
     }
 
     public void parseJson(JSONObject jobj) {
         try {
             solvableModules = ((JSONArray) jobj.get("SolvableModules")).toString(); // .replace("\"", "").replace("[", "").replace("]", "").split(",");
+            if (!solvableModules.equals("[]") && (allModules == null)) {
+                allModules = new ArrayList<>(Arrays.asList(solvableModules.replaceAll("\"", "").replaceAll("\\[", "").replaceAll("\\]", "").split(",")));
+                System.out.println("Set all Modules: " + allModules.toString());
+            }
             modules = ((JSONArray) jobj.get("Modules")).toString(); //.replace("\"", "").replace("[", "").replace("]", "").split(",");
             solvedModules = ((JSONArray) jobj.get("SolvedModules")).toString(); //.replace("\"", "").replace("[", "").replace("]", "").split(",");
             timeLeft = (String) jobj.get("Time");
@@ -304,8 +330,6 @@ public class KtaneHandler {
             if (!bombState.equals("") && timeLeft.equals("")) {
                 bombState = "";
             }
-
-            logDiffs();
 
             // printBombStatus();
         } catch (NullPointerException npe) {
@@ -339,6 +363,7 @@ public class KtaneHandler {
         solvableModules = null;
         modules = null;
         solvedModules = null;
+        tmpSolved = null;
     }
 
     public void initializeJSONHandler() {
