@@ -59,6 +59,7 @@ public class KtaneHandler {
     private String solvableModules, modules, solvedModules;
     private String timeLeft, bombState;
     private long strikes;
+    private int countSolvedModules = 0;
     private ArrayList<String> tmpSolved, allModules;
     private long tmpStrikes = 0;
 
@@ -213,14 +214,14 @@ public class KtaneHandler {
         logDiffs();
         if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
             Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
-            sessionEventList.add(tempstamp+",STRIKE,Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining,"+timeLeft);
+            sessionEventList.add(tempstamp+";STRIKE;Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining;"+timeLeft);
             System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         }
 
         schlafen(1000);
         // System.out.println("Runde zu ende");
         sessionEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
-        sessionEventList.add(1, ("End,"+bombEndTimestamp));
+        sessionEventList.add(1, ("End;"+bombEndTimestamp));
         logGameEvents();
 
         System.out.println(sessionEventList.get(sessionEventList.size() - 1));
@@ -288,11 +289,11 @@ public class KtaneHandler {
     }
 
     public void logGameEvents() {
-        gameEventList.add(1, ("End,"+bombEndTimestamp));
-        gameEventList.add("Bomb Status,"+bombState);
-        gameEventList.add("Time Remaining,"+timeLeft);
-        gameEventList.add("Nr of Strikes," + strikes);
-        gameEventList.add("Nr of solved Modules,"+solvedModules.length());
+        gameEventList.add(1, ("End;"+bombEndTimestamp));
+        gameEventList.add("Bomb Status;"+bombState);
+        gameEventList.add("Time Remaining;"+timeLeft);
+        gameEventList.add("Nr of Strikes;" + strikes);
+        gameEventList.add("Nr of solved Modules;"+ countSolvedModules);
     }
 
 
@@ -328,9 +329,10 @@ public class KtaneHandler {
                     // Get remaining Modules
                     tmpRemaining.removeAll(solvedLive);
 
-                    sessionEventList.add(tempstamp+",SOLVED MODULE,Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
-                            "The remaining Modules are: " + tmpRemaining.toString()+","+timeLeft);
+                    sessionEventList.add(tempstamp+";SOLVED MODULE;Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
+                            "The remaining Modules are: " + tmpRemaining.toString()+";"+timeLeft);
                     System.out.println(sessionEventList.get(sessionEventList.size() - 1));
+                    countSolvedModules = countSolvedModules+1;
 
                     // Update temp variables
                     tmpSolved.clear();
