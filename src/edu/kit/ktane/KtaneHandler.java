@@ -212,7 +212,8 @@ public class KtaneHandler {
         parseJson(ktjshandler.fetchBombInfos());
         logDiffs();
         if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
-            sessionEventList.add("Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining");
+            Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
+            sessionEventList.add(tempstamp+",STRIKE,Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining,"+timeLeft);
             System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         }
 
@@ -297,9 +298,10 @@ public class KtaneHandler {
 
     public void logDiffs() {
         try {
+            Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
             // Diff Strikes
             if (tmpStrikes != strikes) {
-                sessionEventList.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
+                sessionEventList.add(tempstamp+",STRIKE,Got strike nr " + strikes + " with " + timeLeft + " seconds remaining,"+timeLeft);
                 System.out.println(sessionEventList.get(sessionEventList.size() - 1));
                 tmpStrikes = strikes;
             }
@@ -326,8 +328,8 @@ public class KtaneHandler {
                     // Get remaining Modules
                     tmpRemaining.removeAll(solvedLive);
 
-                    sessionEventList.add("Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
-                            "The remaining Modules are: " + tmpRemaining.toString());
+                    sessionEventList.add(tempstamp+",SOLVED MODULE,Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
+                            "The remaining Modules are: " + tmpRemaining.toString()+","+timeLeft);
                     System.out.println(sessionEventList.get(sessionEventList.size() - 1));
 
                     // Update temp variables
