@@ -50,9 +50,12 @@ public class KtaneHandler {
 
     // Some data storage variables.
     private LocalDateTime gameRoundInitiationTimestamp;
-    private Timestamp latestTs = new Timestamp(new Date().getTime());
+    private Timestamp latestTs = new Timestamp(System.currentTimeMillis());
+
+    private Timestamp bombStartTimestamp, bombEndTimestamp;
+
     //    private LinkedList<GameData> gameDataEvents = new LinkedList();
-    private ArrayList<String> gameEventList;
+    private ArrayList<String> sessionEventList, gameEventList;
     private String solvableModules, modules, solvedModules;
     private String timeLeft, bombState;
     private long strikes;
@@ -174,6 +177,18 @@ public class KtaneHandler {
             System.out.println("Mission noch nicht fertig geladen.");
         }
         System.out.println("Mission running, analyze it!");
+        bombStartTimestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println("Start at " + bombStartTimestamp);
+        try {
+            sessionEventList.add("Start," + bombStartTimestamp);
+            gameEventList.add("Start," + bombStartTimestamp);
+        }
+        catch(NullPointerException npe) {
+            System.out.println("Konnte Timestamp nicht setzen.");
+            System.out.println(npe);
+
+        }
+
         try {
             System.out.println("BombState: " + bombState);
         } catch (NullPointerException npe) {
@@ -185,6 +200,7 @@ public class KtaneHandler {
         boolean runWorker = true;
         while (runWorker) {
             if ((bombState.equals("Exploded")) || bombState.equals("Defused")) {
+                bombEndTimestamp = new Timestamp(System.currentTimeMillis());
                 runWorker = false;
             }
             parseJson(ktjshandler.fetchBombInfos());
@@ -196,17 +212,22 @@ public class KtaneHandler {
         parseJson(ktjshandler.fetchBombInfos());
         logDiffs();
         if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
-            gameEventList.add("Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining");
-            System.out.println(gameEventList.get(gameEventList.size() - 1));
+            sessionEventList.add("Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining");
+            System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         }
 
         schlafen(1000);
         // System.out.println("Runde zu ende");
-        gameEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
-        System.out.println(gameEventList.get(gameEventList.size() - 1));
+        sessionEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
+        sessionEventList.add(1, ("End,"+bombEndTimestamp));
+        logGameEvents();
+
+        System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         // TODO: Write game data to file
         try {
-            GameData.writeGameDataToCSVFromMaxisLog(gameEventList, gameRoundInitiationTimestamp);
+            GameData.writeGameDataToFile(sessionEventList, "_sessionLog", gameRoundInitiationTimestamp);
+            GameData.writeGameDataToFile(gameEventList, "_gameLog", gameRoundInitiationTimestamp);
+
         } catch (Exception e) {
             System.out.println("Error!");
             System.out.println(e);
@@ -265,13 +286,21 @@ public class KtaneHandler {
         return isRoundRunning;
     }
 
+    public void logGameEvents() {
+        gameEventList.add(1, ("End,"+bombEndTimestamp));
+        gameEventList.add("Bomb Status,"+bombState);
+        gameEventList.add("Time Remaining,"+timeLeft);
+        gameEventList.add("Nr of Strikes," + strikes);
+        gameEventList.add("Nr of solved Modules,"+solvedModules.length());
+    }
+
 
     public void logDiffs() {
         try {
             // Diff Strikes
             if (tmpStrikes != strikes) {
-                gameEventList.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
-                System.out.println(gameEventList.get(gameEventList.size() - 1));
+                sessionEventList.add("Got strike nr " + strikes + " with " + timeLeft + " seconds remaining");
+                System.out.println(sessionEventList.get(sessionEventList.size() - 1));
                 tmpStrikes = strikes;
             }
 
@@ -288,7 +317,7 @@ public class KtaneHandler {
                 if (tmpSolved == null) {
                     tmpSolved = new ArrayList<>();
                 }
-                // System.out.println("SolvedLive: " + solvedLive.size() + "TmpSolved: " + tmpSolved.size());
+                // System.out.println("SopulvedLive: " + solvedLive.size() + "TmpSolved: " + tmpSolved.size());
                 if ((solvedLive.size() != tmpSolved.size()) || tmpSolved.toString().equals("[]")) {
                     ArrayList<String> tmpNewMod = new ArrayList<>(solvedLive);
                     ArrayList<String> tmpRemaining = new ArrayList<>(allModules);
@@ -297,9 +326,9 @@ public class KtaneHandler {
                     // Get remaining Modules
                     tmpRemaining.removeAll(solvedLive);
 
-                    gameEventList.add("Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
+                    sessionEventList.add("Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
                             "The remaining Modules are: " + tmpRemaining.toString());
-                    System.out.println(gameEventList.get(gameEventList.size() - 1));
+                    System.out.println(sessionEventList.get(sessionEventList.size() - 1));
 
                     // Update temp variables
                     tmpSolved.clear();
@@ -364,10 +393,12 @@ public class KtaneHandler {
         modules = null;
         solvedModules = null;
         tmpSolved = null;
+
     }
 
     public void initializeJSONHandler() {
         ktjshandler = new KtaneJsonHandler(8085, "http://localhost:8085/");
+        sessionEventList = new ArrayList<>();
         gameEventList = new ArrayList<>();
     }
 

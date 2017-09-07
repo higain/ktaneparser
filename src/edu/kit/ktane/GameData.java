@@ -116,10 +116,10 @@ public class GameData {
      *
      * @param gameDataList
      */
-    public static void writeGameDataToCSVFromMaxisLog(ArrayList<String> gameDataList, LocalDateTime sessionInitiationTime) {
+    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, LocalDateTime sessionInitiationTime) {
         try {
             // Write to file
-            String filename = "data/game/" + sessionInitiationTime.format(dateTimeFormat) + "_expgamedata_log.csv";
+            String filename = "data/game/" + sessionInitiationTime.format(dateTimeFormat) + variant + ".csv";
             try (BufferedWriter bw = new BufferedWriter((new FileWriter(new File(filename), true)))) {
                 for (String gameDate : gameDataList) {
                     bw.write(gameDate);
