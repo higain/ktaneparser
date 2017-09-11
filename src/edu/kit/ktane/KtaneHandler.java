@@ -9,8 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -49,7 +49,7 @@ public class KtaneHandler {
     private int numberOfRounds = 0;
 
     // Some data storage variables.
-    private LocalDateTime gameRoundInitiationTimestamp;
+    private Long gameRoundInitiationTimestamp;
     private Timestamp latestTs = new Timestamp(System.currentTimeMillis());
 
     private Timestamp bombStartTimestamp, bombEndTimestamp;
@@ -66,7 +66,7 @@ public class KtaneHandler {
     KtaneJsonHandler ktjshandler;
     static Process ktaneProcess;
 
-    public KtaneHandler(LocalDateTime experimentInitiationTimestamp, LocalDateTime gameRoundInitiationTimestamp) {
+    public KtaneHandler(Long experimentInitiationTimestamp, Long gameRoundInitiationTimestamp) {
 
         // Time the game was started in brownie (this is not the TS for when users start defusing).
         this.gameRoundInitiationTimestamp = gameRoundInitiationTimestamp;

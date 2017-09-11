@@ -3,8 +3,6 @@ package edu.kit.ktane;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ import java.util.List;
  */
 public class GameData {
     private String[] gameDataString = new String[6];
-    static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss-SSS");
+    // static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss-SSS");
     private static final String fileSeparator = File.separator;
     private static final String CSV_SEPARATOR = ",";
     private static String dataLogFile;
@@ -47,11 +45,12 @@ public class GameData {
     /**
      * This constructs an instance of a game date event (e.g. a strike happing at a point in time).
      */
-    public GameData(LocalDateTime gameRoundInitiationTimestamp, LocalDateTime gameRoundStartTimestamp, LocalDateTime eventTimestamp, String bombID, ActiveModule activeModule, GameEvent gameEvent) {
+    public GameData(Long gameRoundInitiationTimestamp, Long gameRoundStartTimestamp, Long
+            eventTimestamp, String bombID, ActiveModule activeModule, GameEvent gameEvent) {
 
-        gameDataString[0] = gameRoundInitiationTimestamp.format(dateTimeFormat);
-        gameDataString[1] = gameRoundStartTimestamp.format(dateTimeFormat);
-        gameDataString[2] = eventTimestamp.format(dateTimeFormat);
+        gameDataString[0] = gameRoundInitiationTimestamp.toString();
+        gameDataString[1] = gameRoundStartTimestamp.toString();
+        gameDataString[2] = eventTimestamp.toString();
         gameDataString[3] = bombID;
         gameDataString[4] = activeModule.name();
         gameDataString[5] = gameEvent.name();
@@ -80,8 +79,8 @@ public class GameData {
     /**
      * ...
      */
-    public static void prepareGameDataFile(LocalDateTime sessionInitiationTime) {
-        dataLogFile = "data/game" + fileSeparator + sessionInitiationTime.format(dateTimeFormat) + "_expgamedata_log.csv";
+    public static void prepareGameDataFile(Long sessionInitiationTime) {
+        dataLogFile = "data/game" + fileSeparator + sessionInitiationTime.toString() + "_expgamedata_log.csv";
 
         // Create subfolder if necessary
         File targetFile = new File(dataLogFile);
@@ -116,10 +115,10 @@ public class GameData {
      *
      * @param gameDataList
      */
-    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, LocalDateTime sessionInitiationTime) {
+    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, Long sessionInitiationTime) {
         try {
             // Write to file
-            String filename = "data/game/" + sessionInitiationTime.format(dateTimeFormat) + variant + ".csv";
+            String filename = "data/game/" + sessionInitiationTime.toString() + variant + ".csv";
             try (BufferedWriter bw = new BufferedWriter((new FileWriter(new File(filename), true)))) {
                 for (String gameDate : gameDataList) {
                     bw.write(gameDate);
