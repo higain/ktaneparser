@@ -41,6 +41,10 @@ public class KtaneHandler {
             "mod_gfpt2_3bomb4", "mod_gfpt2_3bomb5", "mod_gfpt2_3bomb6",
             "mod_gfpt2_3bomb7", "mod_gfpt2_3bomb8", "mod_gfpt2_3bomb9",
             "mod_gfpt2_3bomb10", "mod_gfpt2_3bomb11", "mod_gfpt2_3bomb12"};
+    private String[] missionidlgbfpt3 = {"mod_lgbfpt3_4bomb1", "mod_lgbfpt3_4bomb2", "mod_lgbfpt3_4bomb3",
+            "mod_lgbfpt3_4bomb4", "mod_lgbfpt3_4bomb5", "mod_lgbfpt3_4bomb6",
+            "mod_lgbfpt3_4bomb7", "mod_lgbfpt3_4bomb8", "mod_lgbfpt3_4bomb9",
+            "mod_lgbfpt3_4bomb10", "mod_lgbfpt3_4bomb11", "mod_lgbfpt3_4bomb12"};
     private String[] seeds = {"11778", "13718", "49060", "59085", "27392", "1120", "59549", "44791", "643", "41167", "76218", "6863"};
 
     static private String runningGame;
@@ -474,7 +478,7 @@ public class KtaneHandler {
     }
 
     public boolean startMission(int missionId) {
-        boolean state = ktjshandler.startMission(missionidsgfpt2[missionId], "" + seeds[missionId]);
+        boolean state = ktjshandler.startMission(missionidlgbfpt3[missionId], "" + seeds[missionId]);
         return state;
     }
 
