@@ -274,7 +274,7 @@ public class KtaneHandler {
             System.out.println("Mouse click failed!");
         }
 
-        schlafen(2000);
+        schlafen(200);
 
 //        stopGame();
 
