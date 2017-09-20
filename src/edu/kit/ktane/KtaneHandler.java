@@ -53,7 +53,7 @@ public class KtaneHandler {
     private int numberOfRounds = 0;
 
     // Some data storage variables.
-    private Long gameRoundInitiationTimestamp;
+    private Long gameRoundInitiationTimestamp, experimentInitialisationTimestamp;
     private Timestamp latestTs = new Timestamp(System.currentTimeMillis());
 
     private Timestamp bombStartTimestamp, bombEndTimestamp;
@@ -70,8 +70,11 @@ public class KtaneHandler {
     WindowHandler windowHandler;
     KtaneJsonHandler ktjshandler;
     static Process ktaneProcess;
+    private String currentBombId;
 
     public KtaneHandler(Long experimentInitiationTimestamp, Long gameRoundInitiationTimestamp) {
+        // Time the whole experiment was set up (should not change during rounds)
+        this.experimentInitialisationTimestamp = experimentInitiationTimestamp;
 
         // Time the game was started in brownie (this is not the TS for when users start defusing).
         this.gameRoundInitiationTimestamp = gameRoundInitiationTimestamp;
@@ -148,6 +151,7 @@ public class KtaneHandler {
      * @param gameId Which predefined bomb should be played
      */
     public Boolean go(int gameId) {
+        currentBombId = missionidlgbfpt3[gameId];
 
         // Reset game metrics.
         resetVariables();
@@ -185,8 +189,8 @@ public class KtaneHandler {
         bombStartTimestamp = new Timestamp(System.currentTimeMillis());
         System.out.println("Start at " + bombStartTimestamp);
         try {
-            sessionEventList.add("Start," + bombStartTimestamp);
-            gameEventList.add("Start," + bombStartTimestamp);
+            sessionEventList.add(bombStartTimestamp+";"+currentBombId+";START;Die Mission wurde gestartet;");
+            gameEventList.add("Start;" + bombStartTimestamp);
         }
         catch(NullPointerException npe) {
             System.out.println("Konnte Timestamp nicht setzen.");
@@ -218,21 +222,23 @@ public class KtaneHandler {
         logDiffs();
         if (bombState.equals("Exploded") && !timeLeft.equals("00.00")) {
             Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
-            sessionEventList.add(tempstamp+";STRIKE;Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining;"+timeLeft);
+            sessionEventList.add(tempstamp+";"+currentBombId+";STRIKE;Got strike nr " + ((int) strikes + 1) + " with " + timeLeft + " seconds remaining;"+timeLeft);
             System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         }
 
         schlafen(1000);
         // System.out.println("Runde zu ende");
-        sessionEventList.add("Bomb " + bombState + " with " + timeLeft + " seconds remaining");
-        sessionEventList.add(1, ("End;"+bombEndTimestamp));
+        Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
+        sessionEventList.add(tempstamp+";"+currentBombId+";"+bombState.toUpperCase()+";Bomb " + bombState + " with " + timeLeft + " seconds remaining;"+timeLeft);
+        tempstamp.setTime(System.currentTimeMillis());
+        sessionEventList.add(tempstamp+";"+currentBombId+";END;"+"Runde beendet.;"+timeLeft);
         logGameEvents();
 
         System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         // TODO: Write game data to file
         try {
-            GameData.writeGameDataToFile(sessionEventList, "_sessionLog", gameRoundInitiationTimestamp);
-            GameData.writeGameDataToFile(gameEventList, "_gameLog", gameRoundInitiationTimestamp);
+            GameData.writeGameDataToFile(sessionEventList, "_sessionLog", experimentInitialisationTimestamp);
+            GameData.writeGameDataToFile(gameEventList, "_gameLog", experimentInitialisationTimestamp);
 
         } catch (Exception e) {
             System.out.println("Error!");
@@ -306,7 +312,7 @@ public class KtaneHandler {
             Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
             // Diff Strikes
             if (tmpStrikes != strikes) {
-                sessionEventList.add(tempstamp+",STRIKE,Got strike nr " + strikes + " with " + timeLeft + " seconds remaining,"+timeLeft);
+                sessionEventList.add(tempstamp+";"+currentBombId+";STRIKE;"+";Got strike nr " + strikes + " with " + timeLeft + " seconds remaining;"+timeLeft);
                 System.out.println(sessionEventList.get(sessionEventList.size() - 1));
                 tmpStrikes = strikes;
             }
@@ -333,7 +339,7 @@ public class KtaneHandler {
                     // Get remaining Modules
                     tmpRemaining.removeAll(solvedLive);
 
-                    sessionEventList.add(tempstamp+";SOLVED MODULE;Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
+                    sessionEventList.add(tempstamp+";"+currentBombId+";SOLVED MODULE;"+";Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
                             "The remaining Modules are: " + tmpRemaining.toString()+";"+timeLeft);
                     System.out.println(sessionEventList.get(sessionEventList.size() - 1));
                     countSolvedModules = countSolvedModules+1;

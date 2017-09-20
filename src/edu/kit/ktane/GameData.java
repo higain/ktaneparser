@@ -115,11 +115,33 @@ public class GameData {
      *
      * @param gameDataList
      */
-    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, Long sessionInitiationTime) {
+    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, Long expTimestamp) {
         try {
+            // if subdir game/ does not exist, create
+            File gameDir = new File("data/game");
+            if (!gameDir.exists()) {
+                try {
+                    gameDir.mkdirs();
+                } catch (SecurityException se) {
+                    System.out.println(se);
+                }
+            }
             // Write to file
-            String filename = "data/game/" + sessionInitiationTime.toString() + variant + ".csv";
-            try (BufferedWriter bw = new BufferedWriter((new FileWriter(new File(filename), true)))) {
+            String filename = "data/game/" + expTimestamp.toString() + variant + ".csv";
+            File logFile = new File(filename);
+
+            // If file does not exist, create and write column names
+            if (!logFile.exists() && !logFile.isDirectory()) {
+                String columnNames = "timestamp;bombId;event-code;text";
+                try (BufferedWriter colWrite = new BufferedWriter(new FileWriter(logFile, true))) {
+                    colWrite.write(columnNames);
+                    colWrite.newLine();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(logFile, true))) {
                 for (String gameDate : gameDataList) {
                     bw.write(gameDate);
                     bw.newLine();
