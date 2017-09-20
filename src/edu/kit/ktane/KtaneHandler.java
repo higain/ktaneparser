@@ -312,7 +312,7 @@ public class KtaneHandler {
             Timestamp tempstamp = new Timestamp(System.currentTimeMillis());
             // Diff Strikes
             if (tmpStrikes != strikes) {
-                sessionEventList.add(tempstamp+";"+currentBombId+";STRIKE;"+";Got strike nr " + strikes + " with " + timeLeft + " seconds remaining;"+timeLeft);
+                sessionEventList.add(tempstamp+";"+currentBombId+";STRIKE;Got strike nr " + strikes + " with " + timeLeft + " seconds remaining;"+timeLeft);
                 System.out.println(sessionEventList.get(sessionEventList.size() - 1));
                 tmpStrikes = strikes;
             }
@@ -339,7 +339,7 @@ public class KtaneHandler {
                     // Get remaining Modules
                     tmpRemaining.removeAll(solvedLive);
 
-                    sessionEventList.add(tempstamp+";"+currentBombId+";SOLVED MODULE;"+";Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
+                    sessionEventList.add(tempstamp+";"+currentBombId+";SOLVED MODULE;Solved Module " + tmpNewMod.get(0) + " with " + timeLeft + " seconds remaining. " +
                             "The remaining Modules are: " + tmpRemaining.toString()+";"+timeLeft);
                     System.out.println(sessionEventList.get(sessionEventList.size() - 1));
                     countSolvedModules = countSolvedModules+1;
