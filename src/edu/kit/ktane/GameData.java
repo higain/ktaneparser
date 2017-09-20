@@ -132,7 +132,7 @@ public class GameData {
 
             // If file does not exist, create and write column names
             if (!logFile.exists() && !logFile.isDirectory()) {
-                String columnNames = "timestamp;bombId;event-code;text";
+                String columnNames = "timestamp;bombId;event-code;text;time left";
                 try (BufferedWriter colWrite = new BufferedWriter(new FileWriter(logFile, true))) {
                     colWrite.write(columnNames);
                     colWrite.newLine();
