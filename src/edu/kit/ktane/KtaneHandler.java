@@ -55,8 +55,8 @@ public class KtaneHandler {
     // Some data storage variables.
     private Long gameRoundInitiationTimestamp, experimentInitialisationTimestamp;
     private Timestamp latestTs = new Timestamp(System.currentTimeMillis());
-
     private Timestamp bombStartTimestamp, bombEndTimestamp;
+    private String runningClientID;
 
     //    private LinkedList<GameData> gameDataEvents = new LinkedList();
     private ArrayList<String> sessionEventList, gameEventList;
@@ -72,12 +72,15 @@ public class KtaneHandler {
     static Process ktaneProcess;
     private String currentBombId;
 
-    public KtaneHandler(Long experimentInitiationTimestamp, Long gameRoundInitiationTimestamp) {
+    public KtaneHandler(Long experimentInitiationTimestamp, Long gameRoundInitiationTimestamp, String clientID) {
         // Time the whole experiment was set up (should not change during rounds)
         this.experimentInitialisationTimestamp = experimentInitiationTimestamp;
 
         // Time the game was started in brownie (this is not the TS for when users start defusing).
         this.gameRoundInitiationTimestamp = gameRoundInitiationTimestamp;
+
+        // The name of the client pc that the game is running on.
+        this.runningClientID = clientID;
 
         // Prepare the file writer
         // GameData.prepareGameDataFile(experimentInitiationTimestamp);
@@ -237,8 +240,8 @@ public class KtaneHandler {
         System.out.println(sessionEventList.get(sessionEventList.size() - 1));
         // TODO: Write game data to file
         try {
-            GameData.writeGameDataToFile(sessionEventList, "_sessionLog", experimentInitialisationTimestamp);
-            GameData.writeGameDataToFile(gameEventList, "_gameLog", experimentInitialisationTimestamp);
+            GameData.writeGameDataToFile(sessionEventList, "_sessionLog", experimentInitialisationTimestamp, this.runningClientID);
+            GameData.writeGameDataToFile(gameEventList, "_gameLog", experimentInitialisationTimestamp, this.runningClientID);
 
         } catch (Exception e) {
             System.out.println("Error!");
@@ -407,7 +410,6 @@ public class KtaneHandler {
         modules = null;
         solvedModules = null;
         tmpSolved = null;
-
     }
 
     public void initializeJSONHandler() {

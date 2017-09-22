@@ -115,7 +115,8 @@ public class GameData {
      *
      * @param gameDataList
      */
-    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, Long expTimestamp) {
+    public static void writeGameDataToFile(ArrayList<String> gameDataList, String variant, Long expTimestamp, String
+            clientId) {
         try {
             // if subdir game/ does not exist, create
             File gameDir = new File("data/game");
@@ -127,7 +128,7 @@ public class GameData {
                 }
             }
             // Write to file
-            String filename = "data/game/" + expTimestamp.toString() + variant + ".csv";
+            String filename = "data/game/" + expTimestamp.toString() + clientId + variant + ".csv";
             File logFile = new File(filename);
 
             // If file does not exist, create and write column names
