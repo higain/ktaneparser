@@ -44,7 +44,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="R User Library" level="project" />
-    <orderEntry type="library" name="R Skeletons" level="application" />
+    <orderEntry type="module" module-name="Exp_Implementation" />
   </component>
 </module>

@@ -12,10 +12,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
+import edu.kit.exp.impl.groupmeter.client.KtaneDataSharepoint;
 
 /**
  * Created by maxis on 17.05.2017.
- * TODO: Log Ausgabe nur bei Events: - Modul entschärft, Strike erhalten, Bombe entschärft
  * TODO: Zeit, die pro Modul gebraucht wird (log wann Modul aktiviert wird)
  */
 public class KtaneHandler {
@@ -72,7 +72,9 @@ public class KtaneHandler {
     static Process ktaneProcess;
     private String currentBombId;
 
-    public KtaneHandler(Long experimentInitiationTimestamp, Long gameRoundInitiationTimestamp, String clientID) {
+    private KtaneDataSharepoint kdshare;
+
+    public KtaneHandler(Long experimentInitiationTimestamp, Long gameRoundInitiationTimestamp, String clientID, KtaneDataSharepoint kdshare) {
         // Time the whole experiment was set up (should not change during rounds)
         this.experimentInitialisationTimestamp = experimentInitiationTimestamp;
 
@@ -88,6 +90,7 @@ public class KtaneHandler {
         // Start the game and initialize the JSON game parser.
         initializeJSONHandler();
         tmpSolved = new ArrayList<>();
+        this.kdshare = kdshare;
 
         // Initialize WindowHandler for back- and foreground management
         windowHandler = new WindowHandler();
@@ -236,8 +239,24 @@ public class KtaneHandler {
         tempstamp.setTime(System.currentTimeMillis());
         sessionEventList.add(tempstamp+";"+currentBombId+";END;"+"Runde beendet.;"+timeLeft);
         logGameEvents();
-
         System.out.println(sessionEventList.get(sessionEventList.size() - 1));
+
+        // Save performance data for screen handlers
+        String perf = "";
+        if(bombState.equals("Exploded")) {
+            perf = "Die Bombe ist mit "+ (int)strikes + " Fehler(n) explodiert.";
+        } else {
+            perf = "Die Bombe wurde mit "+ (int)strikes + " Fehler(n) entschärft!";
+        }
+        if(countSolvedModules == 0){
+            perf = perf + " Es wurden keine Module gelöst.";
+        } else if(countSolvedModules == 1) {
+            perf = perf + " Es wurde das Modul " + solvedModules + " gelöst.";
+        } else {
+            perf = perf + " Es wurden die Module " + solvedModules + " gelöst.";
+        }
+        kdshare.setPerformance(perf);
+
         // TODO: Write game data to file
         try {
             GameData.writeGameDataToFile(sessionEventList, "_sessionLog", experimentInitialisationTimestamp, this.runningClientID);
@@ -250,6 +269,7 @@ public class KtaneHandler {
 
         // Click Worker to return the screen to the main menu.
         try {
+            windowHandler.toBackground(false);
             int sleep = 7500;
             Robot robot = new Robot();
             int x = 0;
@@ -272,13 +292,14 @@ public class KtaneHandler {
             }
             sleep = 200;
             while (!timeLeft.equals("")) {
+                windowHandler.toBackground(false);
                 robot.mouseMove(x, y);
                 robot.mousePress(InputEvent.BUTTON1_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 parseJson(ktjshandler.fetchBombInfos());
                 schlafen(1);
             }
-            windowHandler.toBackground(false);
+            // windowHandler.toBackground(false);
         } catch (AWTException e) {
             System.out.println("Mouse click failed!");
         }
